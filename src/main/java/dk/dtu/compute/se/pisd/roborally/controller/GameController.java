@@ -260,9 +260,6 @@ public class GameController {
 
     // TODO Assignment V2
     public void moveForward(@NotNull Player player) {
-        Space currentPlayerSpace = board.getCurrentPlayer().getSpace();
-        moveCurrentPlayerToSpace(board.getNeighbour(currentPlayerSpace, board.getCurrentPlayer().getHeading()));
-
         if (player.board == board) {
             Space space = player.getSpace();
             Heading heading = player.getHeading();
