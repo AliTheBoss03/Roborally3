@@ -27,9 +27,12 @@ import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
@@ -65,7 +68,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.setStyle("-fx-background-color: black;");
         }
 
-        // updatePlayer();
+        //updatePlayer();
 
         // This space view should listen to changes of the space
         space.attach(this);
@@ -96,6 +99,19 @@ public class SpaceView extends StackPane implements ViewObserver {
         if (subject == this.space) {
             updatePlayer();
         }
+
+        Canvas canvas =
+                new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc =
+                canvas.getGraphicsContext2D();
+        gc.setStroke(Color.BLUE);
+        gc.setLineWidth(5);
+        gc.setLineCap(StrokeLineCap.ROUND);
+        gc.strokeLine(2, SPACE_HEIGHT-2,
+                SPACE_WIDTH-2, SPACE_HEIGHT-2);
+        this.getChildren().add(canvas);
+
+
     }
 
 }
