@@ -92,6 +92,19 @@ public class SpaceView extends StackPane implements ViewObserver {
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
         }
+        Pane pane = new Pane();
+        Rectangle rectangle =
+                new Rectangle(0.0, 0.0, SPACE_WIDTH, SPACE_HEIGHT);
+        rectangle.setFill(Color.TRANSPARENT);
+        pane.getChildren().add(rectangle);
+// SOUTH
+        Line line =
+                new Line(2, 2,
+                        2, SPACE_WIDTH);
+        line.setStroke(Color.RED);
+        line.setStrokeWidth(5);
+        pane.getChildren().add(line);
+        this.getChildren().add(pane);
     }
 
     @Override
@@ -100,16 +113,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             updatePlayer();
         }
 
-        Canvas canvas =
-                new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
-        GraphicsContext gc =
-                canvas.getGraphicsContext2D();
-        gc.setStroke(Color.BLUE);
-        gc.setLineWidth(5);
-        gc.setLineCap(StrokeLineCap.ROUND);
-        gc.strokeLine(2, SPACE_HEIGHT-2,
-                SPACE_WIDTH-2, SPACE_HEIGHT-2);
-        this.getChildren().add(canvas);
+
 
 
     }

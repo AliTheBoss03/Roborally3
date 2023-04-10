@@ -27,6 +27,8 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
 
 import dk.dtu.compute.se.pisd.roborally.model.Board;
+import dk.dtu.compute.se.pisd.roborally.model.CommandCard;
+import dk.dtu.compute.se.pisd.roborally.model.CommandCardField;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 
 import javafx.application.Platform;
@@ -84,6 +86,7 @@ public class AppController implements Observer {
                 board.addPlayer(player);
                 player.setSpace(board.getSpace(i % board.width, i));
             }
+
 
             // XXX: V2
             // board.setCurrentPlayer(board.getPlayer(0));

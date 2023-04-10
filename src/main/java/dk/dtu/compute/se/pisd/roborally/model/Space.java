@@ -22,6 +22,10 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.Fieldaction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ...
@@ -30,6 +34,9 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
  *
  */
 public class Space extends Subject {
+
+    private List<Heading> walls = new ArrayList<>();
+    private List<Fieldaction> actions = new ArrayList<>();
 
     public final Board board;
 
@@ -65,6 +72,13 @@ public class Space extends Subject {
         }
     }
 
+    public List<Heading> getWalls() {
+        return walls;
+    }
+
+    public List<Fieldaction> getActions() {
+        return actions;
+    }
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space
         // also need to update when some player attributes change, the player can
