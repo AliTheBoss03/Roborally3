@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-    class Connector {
+    public class Connector {
 
         private static final String HOST     = "127.0.0.1";
         private static final int    PORT     = 3306;
@@ -22,14 +22,14 @@ import java.sql.Statement;
         private static final String USERNAME = "root";
         private static final String PASSWORD = "Ali292003";
 
-        private static final String DELIMITER = ";;";
+        private static final String DELIMITER = ";";
 
         private Connection connection;
 
         Connector() {
             try {
                 // String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
-                String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?serverTimezone=UTC";
+                String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
                 connection = DriverManager.getConnection(url, USERNAME, PASSWORD);
 
                 createDatabaseSchema();

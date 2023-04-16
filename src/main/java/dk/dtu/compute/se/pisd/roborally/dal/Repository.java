@@ -11,7 +11,7 @@ import java.util.List;
 import static dk.dtu.compute.se.pisd.roborally.model.Player.NO_REGISTERS;
 
 
-class Repository implements IRepository {
+public class Repository implements IRepository {
 
     private static final String GAME_GAMEID = "gameID";
 
@@ -57,7 +57,7 @@ class Repository implements IRepository {
 
     private Connector connector;
 
-    Repository(Connector connector){
+    public Repository(Connector connector){
         this.connector = connector;
     }
 
