@@ -107,8 +107,8 @@ public class AppController implements Observer {
     public void loadGame() {
 
 
-        IRepository repo = RepositoryAccess.getRepository();
-        Board board = repo.loadGameFromDB(gameController.board.getGameId());
+        //IRepository repo = RepositoryAccess.getRepository();
+        //Board board = repo.loadGameFromDB(gameController.board.getGameId());
 
 
     }
