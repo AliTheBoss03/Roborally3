@@ -18,7 +18,7 @@ import java.sql.Statement;
 
         private static final String HOST     = "127.0.0.1";
         private static final int    PORT     = 3306;
-        private static final String DATABASE = "Roborally";
+        private static final String DATABASE = "roborally";
         private static final String USERNAME = "root";
         private static final String PASSWORD = "Ali292003";
 
@@ -29,7 +29,7 @@ import java.sql.Statement;
         Connector() {
             try {
                 // String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
-                String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
+                String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?serverTimezone=UTC";
                 connection = DriverManager.getConnection(url, USERNAME, PASSWORD);
 
                 createDatabaseSchema();
