@@ -27,10 +27,7 @@ import com.sun.jdi.connect.spi.Connection;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Observer;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
-import dk.dtu.compute.se.pisd.roborally.dal.Connector;
-import dk.dtu.compute.se.pisd.roborally.dal.IRepository;
-import dk.dtu.compute.se.pisd.roborally.dal.Repository;
-import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
+import dk.dtu.compute.se.pisd.roborally.dal.*;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import javafx.application.Platform;
@@ -59,6 +56,7 @@ public class AppController implements Observer {
     final private RoboRally roboRally;
 
     private GameController gameController;
+
 
     public AppController(@NotNull RoboRally roboRally) {
         this.roboRally = roboRally;
@@ -102,13 +100,26 @@ public class AppController implements Observer {
     public void saveGame() {
         IRepository repo = RepositoryAccess.getRepository();
         repo.createGameInDB(gameController.board);
+
+
     }
 
     public void loadGame() {
+        IRepository repo = RepositoryAccess.getRepository();
+
+        List<GameInDB> gameList = repo.getGames();
+        ChoiceDialog<GameInDB> dialog = new ChoiceDialog<>(gameList.get(gameList.size()-1), gameList);
+        dialog.setTitle("Games options");
+        dialog.setHeaderText("Select the game to load it");
+        Optional<GameInDB> result1 = dialog.showAndWait();
+        if (result1.isPresent()){
+            if ( gameController.board == null) {
+
+                //Board board = repo.loadGameFromDB();
+            }
+        }
 
 
-        //IRepository repo = RepositoryAccess.getRepository();
-        //Board board = repo.loadGameFromDB(gameController.board.getGameId());
 
 
     }

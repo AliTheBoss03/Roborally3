@@ -15,17 +15,17 @@ public class Repository implements IRepository {
 
     private static final String GAME_GAMEID = "gameID";
 
-    private static final String GAME_NAME = "_name";
+    private static final String GAME_NAME = "name";
 
     private static final String GAME_CURRENTPLAYER = "currentPlayer";
 
-    private static final String GAME_PHASE = "phase_";
+    private static final String GAME_PHASE = "phase";
 
     private static final String GAME_STEP = "step";
 
     private static final String PLAYER_PLAYERID = "playerID";
 
-    private static final String PLAYER_NAME = "name_";
+    private static final String PLAYER_NAME = "name";
 
     private static final String PLAYER_COLOUR = "colour";
 
@@ -37,21 +37,6 @@ public class Repository implements IRepository {
 
     private static final String PLAYER_HEADING = "heading";
 
-    private static final String Player_FirstCard = "First_Card";
-
-    private static final String Player_SecondCard = "Second_Card";
-
-    private static final String Player_ThirdCard = "Third_Card";
-
-    private static final String Player_FourthCard = "Fourth_Card";
-
-    private static final String Player_FifthCard = "Fifth_Card";
-
-    private static final String Player_SixthCard = "Sixth_Card";
-
-    private static final String Player_SeventhCard = "Seventh_Card";
-
-    private static final String Player_EightCard = "Eight_Card";
 
 
 
@@ -338,68 +323,17 @@ public class Repository implements IRepository {
         // TODO error handling/consistency check: check whether all players were updated
     }
     private void createCardFieldsInDB(Board game) throws SQLException {
-        // TODO code should be more defensive
-        PreparedStatement ps = getSelectPlayersStatementU();
-        ps.setInt(1, game.getGameId());
 
-        ResultSet rs = ps.executeQuery();
-            Player player = game.getCurrentPlayer();
-            rs.moveToInsertRow();
-            rs.updateString(Player_FirstCard, player.getCardField(0).getCard().getName());
-            rs.updateString(Player_SecondCard, player.getCardField(1).getCard().getName());
-            rs.updateString(Player_ThirdCard, player.getCardField(2).getCard().getName());
-            rs.updateString(Player_FourthCard, player.getCardField(3).getCard().getName());
-            rs.updateString(Player_FifthCard, player.getCardField(4).getCard().getName());
-            rs.updateString(Player_SixthCard, player.getCardField(5).getCard().getName());
-            rs.updateString(Player_SeventhCard, player.getCardField(6).getCard().getName());
-            rs.updateString(Player_EightCard, player.getCardField(7).getCard().getName());
-            rs.insertRow();
-
-        rs.close();
     }
 
     private void loadCardFieldsFromDB(Board game) throws SQLException {
-        PreparedStatement ps = getSelectPlayersASCStatement();
-        ps.setInt(1, game.getGameId());
 
-        ResultSet rs = ps.executeQuery();
-        final int NO_CARDS = 8;
-
-
-        // TODO this should be more defensive
-        String First_Card = rs.getString(Player_FirstCard);
-        String Second_Card = rs.getString(Player_SecondCard);
-        String Third_Card = rs.getString(Player_ThirdCard);
-        String Fourth_Card = rs.getString(Player_FourthCard);
-        String Fifth_Card = rs.getString(Player_FifthCard);
-        String Sixth_Card = rs.getString(Player_SixthCard);
-        String Seventh_Card = rs.getString(Player_SeventhCard);
-        String Eight_Card = rs.getString(Player_EightCard);
-
-
-        CommandCardField[] cards = new CommandCardField[NO_CARDS];
-
-
-        rs.close();
     }
     private void updateCardFieldsInDB(Board game) throws SQLException {
         PreparedStatement ps = getSelectPlayersStatementU();
         ps.setInt(1, game.getGameId());
 
         ResultSet rs = ps.executeQuery();
-            Player player = game.getCurrentPlayer();
-            rs.updateString(Player_FirstCard, player.getCardField(0).getCard().getName());
-            rs.updateString(Player_SecondCard, player.getCardField(1).getCard().getName());
-            rs.updateString(Player_ThirdCard, player.getCardField(2).getCard().getName());
-            rs.updateString(Player_FourthCard, player.getCardField(3).getCard().getName());
-            rs.updateString(Player_FifthCard, player.getCardField(4).getCard().getName());
-            rs.updateString(Player_SixthCard, player.getCardField(5).getCard().getName());
-            rs.updateString(Player_SeventhCard, player.getCardField(6).getCard().getName());
-            rs.updateString(Player_EightCard, player.getCardField(7).getCard().getName());
-            // TODO error handling
-            // TODO take care of case when number of players changes, etc
-            rs.updateRow();
-        rs.close();
 
         // TODO error handling/consistency check: check whether all players were updated
     }
