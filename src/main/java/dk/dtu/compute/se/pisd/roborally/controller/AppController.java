@@ -106,22 +106,16 @@ public class AppController implements Observer {
 
     public void loadGame() {
         IRepository repo = RepositoryAccess.getRepository();
-
         List<GameInDB> gameList = repo.getGames();
-        ChoiceDialog<GameInDB> dialog = new ChoiceDialog<>(gameList.get(gameList.size()-1), gameList);
+        ChoiceDialog<GameInDB> dialog = new ChoiceDialog<>(gameList.get(gameList.size() - 1), gameList);
         dialog.setTitle("Games options");
         dialog.setHeaderText("Select the game to load it");
         Optional<GameInDB> result1 = dialog.showAndWait();
-        if (result1.isPresent()){
-            if ( gameController.board == null) {
-
-                //Board board = repo.loadGameFromDB();
+        if ( gameController.board == null) {
+            if (result1.isPresent()) {
+                repo.loadGameFromDB(result1.get().id);
             }
         }
-
-
-
-
     }
 
     /**
