@@ -70,6 +70,21 @@ public class SpaceView extends StackPane implements ViewObserver {
         if (space.x == 4  && space.y == 1) {
             this.setStyle("-fx-background-color: purple;");
         }
+        if (space.x == 6  && space.y == 2) {
+            this.setStyle("-fx-background-color: purple;");
+        }
+        if (space.x == 3  && space.y == 2) {
+            this.setStyle("-fx-background-color: purple;");
+        }
+        if (space.x == 1  && space.y == 4) {
+            this.setStyle("-fx-background-color: purple;");
+        }
+        if (space.x == 3  && space.y == 3) {
+            this.setStyle("-fx-background-color: purple;");
+        }
+        if (space.x == 2  && space.y == 4) {
+            this.setStyle("-fx-background-color: purple;");
+        }
 
 
         //updatePlayer();
@@ -101,14 +116,30 @@ public class SpaceView extends StackPane implements ViewObserver {
                 new Rectangle(0.0, 0.0, SPACE_WIDTH, SPACE_HEIGHT);
         rectangle.setFill(Color.TRANSPARENT);
         pane.getChildren().add(rectangle);
-// SOUTH
-        Line line =
-                new Line(2, 2,
-                        2, SPACE_WIDTH);
-        line.setStroke(Color.RED);
-        line.setStrokeWidth(5);
-        pane.getChildren().add(line);
-        this.getChildren().add(pane);
+        for (Heading heading : space.getWalls()) {
+            switch (heading) {
+                case SOUTH:
+                    Line line =
+                            new Line(2, 2,
+                                    2, SPACE_WIDTH);
+                    line.setStroke(Color.RED);
+                    line.setStrokeWidth(5);
+                    pane.getChildren().add(line);
+                    this.getChildren().add(pane);
+                    break;
+                case WEST:
+
+                    break;
+                case NORTH:
+
+                    break;
+                case EAST:
+
+                    break;
+            }
+
+        }
+
     }
 
     @Override

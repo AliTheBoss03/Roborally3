@@ -13,6 +13,7 @@ public interface IRepository {
 
     Board loadGameFromDB(int id);
 
+
     List<GameInDB> getGames();
 
 }
