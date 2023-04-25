@@ -66,8 +66,12 @@ public class Board extends Subject {
             for(int y = 0; y < height; y++) {
                 Space space = new Space(this, x, y);
                 spaces[x][y] = space;
+                if(x == 4 && y == 1){
+                space = new Checkpoint(this,x,y,1);
+                }
             }
         }
+
         this.stepMode = false;
     }
 
