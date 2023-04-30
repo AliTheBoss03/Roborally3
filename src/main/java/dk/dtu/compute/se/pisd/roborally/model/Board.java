@@ -66,8 +66,13 @@ public class Board extends Subject {
             for(int y = 0; y < height; y++) {
                 Space space = new Space(this, x, y);
                 spaces[x][y] = space;
+                if(x == 4 && y == 1) {
+                    space.getWalls().add(Heading.SOUTH);
+                    space = new Checkpoint(this,x,y,1);
+                }
             }
         }
+
         this.stepMode = false;
     }
 
@@ -180,6 +185,9 @@ public class Board extends Subject {
      * @return the space in the given direction; null if there is no (reachable) neighbour
      */
     public Space getNeighbour(@NotNull Space space, @NotNull Heading heading) {
+        if (space.getWalls().contains(heading))  {
+            return null;
+        }
         int x = space.x;
         int y = space.y;
         switch (heading) {
@@ -195,6 +203,13 @@ public class Board extends Subject {
             case EAST:
                 x = (x + 1) % width;
                 break;
+        }
+        Heading reverse = Heading.values()[(heading.ordinal() + 2)% Heading.values().length];
+        Space result = getSpace(x, y);
+        if (result != null) {
+            if (result.getWalls().contains(reverse)) {
+                return null;
+            }
         }
 
         return getSpace(x, y);

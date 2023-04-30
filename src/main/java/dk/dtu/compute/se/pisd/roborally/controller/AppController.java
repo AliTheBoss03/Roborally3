@@ -100,20 +100,21 @@ public class AppController implements Observer {
     public void saveGame() {
         IRepository repo = RepositoryAccess.getRepository();
         repo.createGameInDB(gameController.board);
-
-
     }
 
     public void loadGame() {
-        IRepository repo = RepositoryAccess.getRepository();
-        List<GameInDB> gameList = repo.getGames();
-        ChoiceDialog<GameInDB> dialog = new ChoiceDialog<>(gameList.get(gameList.size() - 1), gameList);
-        dialog.setTitle("Games options");
-        dialog.setHeaderText("Select the game to load it");
-        Optional<GameInDB> result1 = dialog.showAndWait();
-        if ( gameController.board == null) {
+        if ( gameController == null) {
+            IRepository repo = RepositoryAccess.getRepository();
+            List<GameInDB> gameList = repo.getGames();
+            ChoiceDialog<GameInDB> dialog = new ChoiceDialog<>(gameList.get(gameList.size() - 1), gameList);
+            dialog.setTitle("Games options");
+            dialog.setHeaderText("Select the game to load it");
+            Optional<GameInDB> result1 = dialog.showAndWait();
+
             if (result1.isPresent()) {
-                repo.loadGameFromDB(result1.get().id);
+               Board board = repo.loadGameFromDB(result1.get().id);
+                gameController = new GameController(board);
+                roboRally.createBoardView(gameController);
             }
         }
     }
