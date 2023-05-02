@@ -29,7 +29,7 @@ import java.sql.Statement;
         Connector() {
             try {
                 // String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
-                String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?serverTimezone=UTC" + "&useSSL=false";
+                String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?serverTimezone=UTC";
                 connection = DriverManager.getConnection(url, USERNAME, PASSWORD);
 
                 createDatabaseSchema();
