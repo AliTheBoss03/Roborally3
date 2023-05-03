@@ -68,22 +68,22 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.setStyle("-fx-background-color: black;");
         }
         if (space.x == 4  && space.y == 1) {
-            this.setStyle("-fx-background-color: purple;");
+            this.setStyle("-fx-background-color: pink;");
         }
         if (space.x == 6  && space.y == 2) {
-            this.setStyle("-fx-background-color: purple;");
+            this.setStyle("-fx-background-color: pink;");
         }
         if (space.x == 3  && space.y == 2) {
-            this.setStyle("-fx-background-color: purple;");
+            this.setStyle("-fx-background-color: pink;");
         }
         if (space.x == 1  && space.y == 4) {
-            this.setStyle("-fx-background-color: purple;");
+            this.setStyle("-fx-background-color: pink;");
         }
         if (space.x == 3  && space.y == 3) {
-            this.setStyle("-fx-background-color: purple;");
+            this.setStyle("-fx-background-color: pink;");
         }
         if (space.x == 2  && space.y == 4) {
-            this.setStyle("-fx-background-color: purple;");
+            this.setStyle("-fx-background-color: pink;");
         }
 
 

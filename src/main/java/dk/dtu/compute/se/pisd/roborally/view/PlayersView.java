@@ -62,3 +62,4 @@ public class PlayersView extends TabPane implements ViewObserver {
     }
 
 }
+
