@@ -39,6 +39,9 @@ public class Board extends Subject {
 
     public final int width;
 
+
+    public int  finaleCheckpoint;
+
     public final int height;
 
     public final String boardName;
@@ -66,9 +69,11 @@ public class Board extends Subject {
             for(int y = 0; y < height; y++) {
                 Space space = new Space(this, x, y);
                 spaces[x][y] = space;
-                if(x == 4 && y == 1) {
+                if(x == 4 && y == 1)
+                    space = new Checkpoint(this,x,y);
+                {
                     space.getWalls().add(Heading.SOUTH);
-                    space = new Checkpoint(this,x,y,1);
+
                 }
             }
         }

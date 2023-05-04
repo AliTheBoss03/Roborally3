@@ -44,7 +44,9 @@ public class Space extends Subject {
     public final int x;
     public final int y;
 
+
     private Player player;
+
 
     public Space(Board board, int x, int y) {
         this.board = board;

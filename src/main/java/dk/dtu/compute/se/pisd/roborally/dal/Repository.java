@@ -336,19 +336,37 @@ public class Repository implements IRepository {
         ps.setInt(1, game.getGameId());
 
         ResultSet rs = ps.executeQuery();
+
         for (int i = 0; i < game.getPlayersNumber(); i++) {
-
             player = game.getPlayer(i);
+            for (int j = 0; j < 5; j++) {
+                rs.moveToInsertRow();
+                rs.updateInt(FIELD_GAMEID, game.getGameId());
+                rs.updateInt(FIELD_PLAYERID, i);
+                rs.updateInt(FIELD_POSITION, j);
+                rs.updateInt(FIELD_TYPE, FIELD_TYPE_REGISTER);
+                rs.updateBoolean(FIELD_VISIBLE, player.getProgramField(j).isVisible());
+                CommandCard card = player.getProgramField(j).getCard();
+                if (card != null){
+                    rs.updateInt(FIELD_COMMAND, card.command.ordinal());
+                }
+                rs.insertRow();
+            }
+            for (int j = 0; j < 8; j++) {
+                rs.moveToInsertRow();
+                rs.updateInt(FIELD_GAMEID, game.getGameId());
+                rs.updateInt(FIELD_PLAYERID, i);
+                rs.updateInt(FIELD_POSITION, j);
+                rs.updateInt(FIELD_TYPE, FIELD_TYPE_HAND);
+                rs.updateBoolean(FIELD_VISIBLE, player.getCardField(j).isVisible());
+                CommandCard card = player.getCardField(j).getCard();
+                if (card != null){
+                    rs.updateInt(FIELD_COMMAND, card.command.ordinal());
+                }
+                rs.insertRow();
+            }
 
-            rs.moveToInsertRow();
-            rs.updateInt(FIELD_GAMEID, game.getGameId());
-            rs.updateInt(FIELD_PLAYERID, i);
 
-            //rs.updateInt(FIELD_TYPE, player);
-            //rs.updateInt(FIELD_POSITION,);
-            //rs.updateInt(FIELD_VISIBLE, );
-            //rs.updateInt(FIELD_COMMAND, );
-            rs.insertRow();
         }
 
         rs.close();
@@ -389,6 +407,35 @@ public class Repository implements IRepository {
         ps.setInt(1, game.getGameId());
 
         ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int playerId = rs.getInt(FIELD_PLAYERID);
+            // TODO should be more defensive
+            Player player = game.getPlayer(playerId);
+            int type = rs.getInt(FIELD_TYPE);
+            int position = rs.getInt(FIELD_POSITION);
+            CommandCardField field;
+
+            if (type == FIELD_TYPE_REGISTER) {
+                field = player.getProgramField(position);
+            } else {
+                field = player.getCardField(position);
+            }
+            CommandCard card = field.getCard();
+            if (card != null) {
+                Command command = card.command;
+                rs.updateInt(FIELD_COMMAND, command.ordinal());
+            } else {
+                rs.updateNull(FIELD_COMMAND);
+            }
+            rs.updateBoolean(FIELD_VISIBLE,field.isVisible());
+
+
+
+            // TODO error handling
+            // TODO take care of case when number of players changes, etc
+            rs.updateRow();
+        }
+        rs.close();
 
         // TODO error handling/consistency check: check whether all players were updated
     }

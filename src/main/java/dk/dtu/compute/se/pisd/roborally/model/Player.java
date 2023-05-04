@@ -24,6 +24,8 @@ package dk.dtu.compute.se.pisd.roborally.model;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
 
 /**
@@ -33,6 +35,22 @@ import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
  *
  */
 public class Player extends Subject {
+
+
+    public Player findvinderen (List<Player> players) {
+        Player winner = null;
+        int maxCheckpoints = 0;
+        for (Player player : players) {
+            if (player.getCheckpointCount() > maxCheckpoints) {
+                winner = player;
+                maxCheckpoints = player.getCheckpointCount();
+            } else if (player.getCheckpointCount() == maxCheckpoints) {
+                winner = null;
+            }
+        }
+        return winner;
+
+    }
 
     final public static int NO_REGISTERS = 5;
     final public static int NO_CARDS = 8;
@@ -66,7 +84,6 @@ public class Player extends Subject {
             cards[i] = new CommandCardField(this);
         }
     }
-
 
     public String getName() {
         return name;
@@ -144,11 +161,14 @@ public class Player extends Subject {
     }
 
 
+    public void incrementCheckpointCount() {
+        // increment by one
+    }
+
+    public int getCheckpointCount() {
+        return 0;
 
 
+    }
 }
-
-
-
-
 
