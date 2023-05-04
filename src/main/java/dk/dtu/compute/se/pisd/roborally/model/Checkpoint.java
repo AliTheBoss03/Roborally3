@@ -21,6 +21,11 @@ public class Checkpoint extends Space {
     }
 
     public void playPassedCheckpoint(Player checkingPlayer) {
-        // her kan der tilføjes logik, hvis nødvendigt
+
     }
+
 }
+
+
+
+

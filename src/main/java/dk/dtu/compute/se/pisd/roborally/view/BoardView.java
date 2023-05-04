@@ -65,6 +65,8 @@ public class BoardView extends VBox implements ViewObserver {
         this.getChildren().add(statusLabel);
 
         spaces = new SpaceView[board.width][board.height];
+        System.out.println(board.width);
+        System.out.println(board.height);
 
         spaceEventHandler = new SpaceEventHandler(gameController);
 

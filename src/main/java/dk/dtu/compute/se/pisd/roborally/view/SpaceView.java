@@ -44,8 +44,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public class SpaceView extends StackPane implements ViewObserver {
 
-    final public static int SPACE_HEIGHT = 75; // 60; // 75;
-    final public static int SPACE_WIDTH = 75;  // 60; // 75;
+    final public static int SPACE_HEIGHT = 55; // 60; // 75;
+    final public static int SPACE_WIDTH = 55;  // 60; // 75;
 
     public final Space space;
 
@@ -69,6 +69,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
         if (space.x == 4  && space.y == 1) {
             this.setStyle("-fx-background-color: pink;");
+
         }
         if (space.x == 6  && space.y == 2) {
             this.setStyle("-fx-background-color: pink;");
@@ -111,36 +112,31 @@ public class SpaceView extends StackPane implements ViewObserver {
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
         }
-        Pane pane = new Pane();
+
+        Pane wallsPane = new Pane();
         Rectangle rectangle =
                 new Rectangle(0.0, 0.0, SPACE_WIDTH, SPACE_HEIGHT);
         rectangle.setFill(Color.TRANSPARENT);
-        pane.getChildren().add(rectangle);
+        wallsPane.getChildren().add(rectangle);
         for (Heading heading : space.getWalls()) {
             switch (heading) {
                 case SOUTH:
-                    Line line =
-                            new Line(2, 2,
-                                    2, SPACE_WIDTH);
+                    Line line = new Line(2, 2, 2, SPACE_WIDTH);
                     line.setStroke(Color.RED);
                     line.setStrokeWidth(5);
-                    pane.getChildren().add(line);
-                    this.getChildren().add(pane);
+                    wallsPane.getChildren().add(line);
                     break;
                 case WEST:
-
                     break;
                 case NORTH:
-
                     break;
                 case EAST:
-
                     break;
             }
-
         }
-
+        this.getChildren().add(wallsPane);
     }
+
 
     @Override
     public void updateView(Subject subject) {

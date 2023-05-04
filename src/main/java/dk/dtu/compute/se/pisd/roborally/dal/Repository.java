@@ -52,6 +52,7 @@ public class Repository implements IRepository {
     private Player player;
 
     public Repository(Connector connector){
+
         this.connector = connector;
     }
 
@@ -323,6 +324,8 @@ public class Repository implements IRepository {
             rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
             rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
             rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
+
+
             // TODO error handling
             // TODO take care of case when number of players changes, etc
             rs.updateRow();
