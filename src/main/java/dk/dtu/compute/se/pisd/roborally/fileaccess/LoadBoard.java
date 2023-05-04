@@ -22,15 +22,18 @@ import java.io.*;
 public class LoadBoard {
 
     private static final String BOARDSFOLDER = "boards";
-    private static final String DEFAULTBOARD = "defaultboard";
+    private static final String DEFAULTBOARD = "defaultboard" +"defaultboard2";
+
+
     private static final String JSON_EXT = "json";
 
     public static Board loadBoard(String boardname) {
         if (boardname == null) {
             boardname = DEFAULTBOARD;
+
+
         }
 
-        //Læs af Fil
 
         // In simple cases, we can create a Gson object with new Gson():
         GsonBuilder simpleBuilder = new GsonBuilder().

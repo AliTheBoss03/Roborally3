@@ -21,9 +21,6 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
-import com.mysql.cj.conf.ConnectionUrl;
-import com.sun.jdi.connect.Transport;
-import com.sun.jdi.connect.spi.Connection;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Observer;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
@@ -40,7 +37,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -53,7 +49,7 @@ public class AppController implements Observer {
 
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
 
-    final private List<String> BOARD_OPTIONS = Arrays.asList("defaultboard");
+    final private List<String> BOARD_OPTIONS = Arrays.asList("defaultbord","defaultboard2");
 
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
 
@@ -74,6 +70,10 @@ public class AppController implements Observer {
         dialog.setHeaderText("Select number of players");
         Optional<Integer> result = dialog.showAndWait();
 
+        ChoiceDialog<String> dialog2 = new ChoiceDialog<>(BOARD_OPTIONS.get(0), BOARD_OPTIONS);
+        dialog2.setTitle("Choice of board");
+        dialog2.setHeaderText("Select board");
+        Optional<String> result2 = dialog2.showAndWait();
 
 
         if (result.isPresent()) {
@@ -89,13 +89,29 @@ public class AppController implements Observer {
             //     here we just create an empty board with the required number of players.
             //Board board = new Board(8,5);
             Board board = LoadBoard.loadBoard("defaultboard");
+
+            Board board2 = LoadBoard.loadBoard("defaultboard2");
+
+
             gameController = new GameController(board);
             int no = result.get();
             for (int i = 0; i < no; i++) {
                 Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
                 board.addPlayer(player);
                 player.setSpace(board.getSpace(i % board.width, i));
+
+
+// Json fil 2
             }
+            gameController = new GameController(board2);
+            int no2 = result.get();
+            for (int i = 0; i < no2; i++) {
+                Player player = new Player(board2, PLAYER_COLORS.get(i), "Player " + (i + 1));
+                board2.addPlayer(player);
+                player.setSpace(board2.getSpace(i % board2.width, i));
+            }
+
+
 
 
             // XXX: V2
@@ -124,6 +140,10 @@ public class AppController implements Observer {
                Board board = repo.loadGameFromDB(result1.get().id);
                 gameController = new GameController(board);
                 roboRally.createBoardView(gameController);
+
+
+
+
             }
         }
     }
