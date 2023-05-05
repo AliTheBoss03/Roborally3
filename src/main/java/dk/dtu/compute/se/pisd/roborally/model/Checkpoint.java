@@ -7,6 +7,7 @@ public class Checkpoint extends Space {
     public Checkpoint(Board board, int x, int y) {
         super(board, x, y);
         this.checkpointNumber = checkpointNumber;
+
     }
 
     public int getCheckpointNumber() {
@@ -21,6 +22,11 @@ public class Checkpoint extends Space {
     }
 
     public void playPassedCheckpoint(Player checkingPlayer) {
-        // her kan der tilføjes logik, hvis nødvendigt
+
     }
+
 }
+
+
+
+

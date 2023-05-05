@@ -36,14 +36,20 @@ import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
  */
 public class Player extends Subject {
 
+    private int maxCheckpoints = 0;
+    public int[] xcheckpoints = new int[6];
+    public int[] ycheckpoints = new int[6];
+
+    public int[] xcoords = new int[6];
+    public int[] ycoords = new int[6];
 
     public Player findvinderen (List<Player> players) {
         Player winner = null;
-        int maxCheckpoints = 0;
         for (Player player : players) {
-            if (player.getCheckpointCount() > maxCheckpoints) {
+            if (player.getCheckpointCount() == 6) {
                 winner = player;
                 maxCheckpoints = player.getCheckpointCount();
+                System.out.println(player.getName () + " winner");
             } else if (player.getCheckpointCount() == maxCheckpoints) {
                 winner = null;
             }
@@ -68,6 +74,18 @@ public class Player extends Subject {
     private CommandCardField[] cards;
 
     public Player(@NotNull Board board, String color, @NotNull String name) {
+        xcoords[0] = 4;
+        ycoords[0] = 1;
+        xcoords[1] = 6;
+        ycoords[1] = 2;
+        xcoords[2] = 3;
+        ycoords[2] = 2;
+        xcoords[3] = 1;
+        ycoords[3] = 4;
+        xcoords[4] = 3;
+        ycoords[4] = 3;
+        xcoords[5] = 2;
+        ycoords[5] = 4;
         this.board = board;
         this.name = name;
         this.color = color;
@@ -162,11 +180,11 @@ public class Player extends Subject {
 
 
     public void incrementCheckpointCount() {
-        // increment by one
+        maxCheckpoints++;
     }
 
     public int getCheckpointCount() {
-        return 0;
+        return maxCheckpoints;
 
 
     }

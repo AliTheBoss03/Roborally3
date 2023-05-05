@@ -37,6 +37,7 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
  */
 public class Board extends Subject {
 
+
     public final int width;
 
 
@@ -82,7 +83,7 @@ public class Board extends Subject {
     }
 
     public Board(int width, int height) {
-        this(width, height, "defaultboard");
+        this(width, height, "defaultboard" +"defaultboard2");
     }
 
     public Integer getGameId() {
@@ -179,7 +180,7 @@ public class Board extends Subject {
         }
     }
 
-    /**
+    /*
      * Returns the neighbour of the given space of the board in the given heading.
      * The neighbour is returned only, if it can be reached from the given space
      * (no walls or obstacles in either of the involved spaces); otherwise,
@@ -225,8 +226,6 @@ public class Board extends Subject {
         // the students, this method gives a string representation of the current
         // status of the game
 
-        // TODO V1: add the move count to the status message
-        // XXX: V2 changed the status so that it shows the phase, the current player and the number of steps
         return "Phase: " + getPhase().name() +
                 ", Player = " + getCurrentPlayer().getName() + ", Moves = " + getCurrentPlayer().getMoveCount();
     }

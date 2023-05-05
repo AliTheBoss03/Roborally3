@@ -22,8 +22,10 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.RoboRally;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
+import dk.dtu.compute.se.pisd.roborally.model.Checkpoint;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import javafx.scene.control.TabPane;
 
@@ -38,6 +40,8 @@ public class PlayersView extends TabPane implements ViewObserver {
     private Board board;
 
     private PlayerView[] playerViews;
+
+
 
     public PlayersView(GameController gameController) {
         board = gameController.board;
@@ -55,11 +59,30 @@ public class PlayersView extends TabPane implements ViewObserver {
 
     @Override
     public void updateView(Subject subject) {
+
         if (subject == board) {
             Player current = board.getCurrentPlayer();
             this.getSelectionModel().select(board.getPlayerNumber(current));
+            System.out.println("player: " + current.getName () + ": (" + current.getSpace ().x + ", " + current.getSpace ().y + ") has checkpoints: " + current.getCheckpointCount ());
+            for (int i = 0; i < 6; i++){
+                if ((current.getSpace().x == current.xcoords[i]) && (current.getSpace ().y == current.ycoords[i])){
+                    if(!(current.xcheckpoints[i] == current.xcoords[i]) && !(current.ycheckpoints[i] == current.ycoords[i]))
+                            current.xcheckpoints[i] = current.xcoords[i];
+                            current.ycheckpoints[i] = current.ycoords[i];
+                            current.incrementCheckpointCount ();
+                            current.xcoords[i] = -1;
+                            current.ycoords[i] = -1;
+                    }
+                }
+            if(current.getCheckpointCount ()==6)
+                System.out.println("Player " + current.getName () + " wins!");
+
+
         }
-    }
+        }
+
 
 }
+
+
 
