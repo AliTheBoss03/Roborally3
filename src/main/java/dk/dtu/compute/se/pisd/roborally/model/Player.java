@@ -37,7 +37,6 @@ import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
 public class Player extends Subject {
 
     private int maxCheckpoints = 0;
-
     public int[] xcheckpoints = new int[6];
     public int[] ycheckpoints = new int[6];
 

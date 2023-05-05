@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static dk.dtu.compute.se.pisd.roborally.model.Player.NO_REGISTERS;
-
 
 public class Repository implements IRepository {
 
@@ -334,6 +332,27 @@ public class Repository implements IRepository {
 
         // TODO error handling/consistency check: check whether all players were updated
     }
+    /*
+Metoden createCardFieldsInDB sørger for at oprette et skema for både spillerenes programmeringskort og håndkort som gemmes i databasen når knappen savGame bliver valgt og dermed metoden createGameInDB bliver kaldt
+Til at starte med oprettes et preparedstatement som refererer til metoden getSelectCardFieldStatementU().
+Og dernæst tages udgangspunkt i game id'et
+Ideen bag CardFields skema er at referere til et gamID for den valgte game, et playerID for den bestemte spiller så hver spiller har sin egen gemte kort,
+en type som enten kan være programmeringskort eller håndkort, en position for det kort, en command for de enkelte kort og om de vises på boardet eller ikke.
+Der oprettes derfor to for loops, den første beskriver til at starte med de 5 programmeringskort og det er derfor i-værdien kun går op til 5,
+den anden beskriver de 8 håndkort og derfor går i-værdien op til 8.
+De to for loops ligger i en stor for loop som tager udgangspunkt i hver enkelt spiller og dermed gennemgås koden for hver spiller.
+rs bruges for at gemme de forskellige data i databasen. rs bliver erklæret som et resultset hvor man eksekverer query.
+Der er blevet lavet forskellige strings og integers i denne sammenhæng som står øverst i klassen.
+Den første string er GameID, som selvfølgelige bliver tildelt gamet's id og dermed hentes det ved at kalde metoden game.getGameID og metoden updateInt bruges da vi har at gøre med en integer som er ID.
+Den anden er playerID og i vores tilfælde er playerID bar værdien i fra for loopet som gennemgår hver enkelt spiller.
+Positionen på den enkelte kort bliver defineret som j da det er den værdi som bruges i for loopet til at gennemgå alle kortene.
+Ift. typen på kortene har vi lavet to integers med navnet FIELD_TYPE_REGISTER som har værdien 0 og FIELD_TYPE_HAND som har værdien 1.
+I den første for loop har vi at gøre med programmeringskort og derfor bliver typen tildelt værdien for FIELD_TYPE_REGISTER som er 0.
+For at tildele en værdi for Visible bliver vi nød til at bruge updateBoolean i stedet da vi har at gøre med et boolean, og derefter bruger vi metoden player.getProgramField(j).isVisible() til både at vide hvilket kort det er og om det er synligt eller ikke.
+For at gemme commands for de forskellige programmeringskort, tjekkes først om der er kort, for hvis der ikke er giver det ikke mening at gemme commands og der vil derfor kommer fejl.
+derefter findes den præcise command og der sættes .ordinal() i slutningen for at lave det om til en string.
+Det samme gøres for håndkortene men typen får værdien 1 fra FIELD_TYPE_HAND og der bruges getCardField(j) i stedet for getProgramField(j).
+     */
     private void createCardFieldsInDB(Board game) throws SQLException {
         PreparedStatement ps = getSelectCardFieldStatementU();
         ps.setInt(1, game.getGameId());
@@ -368,13 +387,15 @@ public class Repository implements IRepository {
                 }
                 rs.insertRow();
             }
-
-
         }
-
         rs.close();
     }
-
+/*
+I metoden loadCardFieldsFromDB loades de værdier som vi i forrige metode gemte i databasen. Der bruges et while loop der hele tiden tjekker om der er mere som skal loades.
+Vi henter dermed værdierne ved at bruge metoderne getInt, getObject eller getBoolean.
+For at hente den Field som kortene befinder sig på tjekkes der om typen er FIELD_TYPE_REGISTER eller FIELD_TYPE_HAND og derefter bruges den rigtig metode til at hente de rigtige kort.
+Hvis field ikke er tom så sættes Visibile til at være true og dermed visible.
+ */
 
     private void loadCardFieldsFromDB(Board game) throws SQLException {
         PreparedStatement ps = getSelectCardFieldStatement();
@@ -405,6 +426,10 @@ public class Repository implements IRepository {
         }
         rs.close();
     }
+    /*
+    I denne metode er det lidt på samme måde som createCardFieldInDB, hvor der findes mange af de samme måder tingene er brugt på.
+    Og dermed er der ikke så meget at forklare yderligere.
+     */
     private void updateCardFieldsInDB(Board game) throws SQLException {
         PreparedStatement ps = getSelectPlayersStatementU();
         ps.setInt(1, game.getGameId());
@@ -412,7 +437,6 @@ public class Repository implements IRepository {
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             int playerId = rs.getInt(FIELD_PLAYERID);
-            // TODO should be more defensive
             Player player = game.getPlayer(playerId);
             int type = rs.getInt(FIELD_TYPE);
             int position = rs.getInt(FIELD_POSITION);
