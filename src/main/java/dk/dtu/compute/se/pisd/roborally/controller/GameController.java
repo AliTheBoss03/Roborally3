@@ -46,6 +46,10 @@ public class GameController {
      *
      * @param space the space to which the current player should move
      */
+    /*
+    Denne metode tager udgangspunkt i den nuværende spiller og flytter spilleren til den valgte space hvis den er ledig
+    Metoden sætter også movecounter op hver gang spilleren bevæges.
+     */
     public void moveCurrentPlayerToSpace(@NotNull Space space)  {
         if (space.getPlayer() == null) {
             Player currentplayer = board.getCurrentPlayer();
@@ -217,6 +221,11 @@ public class GameController {
             assert false;
         }
     }
+    /*
+    Metoden executeCommandOptionAndContinue eksekverer metoden executeCommand som bliver beskrevet nedenunder
+    Phase på spillet sættes til Activation Phase og dermed fortsættes det
+    Efter at har erklæret hvad currentplayer er, udføres if statement hvis fasen er aktivations fasen og hvis der er en spiller i spillet
+     */
     public void executeCommandOptionAndContinue(Command option){
         executeCommand(board.getCurrentPlayer(), option);
         board.setPhase(Phase.ACTIVATION);
@@ -253,7 +262,12 @@ public class GameController {
             assert false;
         }
     }
-
+/*
+executeCommand er en metode der bruges til at eksekverer de forskellige Commands som programmeringskortene indeholder
+Metoden har 2 parametre som er en player og den command som skal udføres
+Der oprettes et switch statement som tager en command og fortæller hvad systemet skal gøre i de forskellige commands
+For eksempel hvis det er FORWARD command kaldes metoden moveForward.
+ */
     // XXX: V2
     private void executeCommand(@NotNull Player player, Command command) {
         if (player != null && player.board == board && command != null) {
@@ -280,7 +294,13 @@ public class GameController {
         }
     }
 
-    // TODO Assignment V2
+
+    /*
+    Metoden moveForward tager en spiller som parmeter og starter med at sammenligne hvis playerBoard er den samme som board
+   Hvis det er tilfældet findes den space som spilleren står på samt den heading eller retning som spilleren har
+   Der oprettes et felt som finder det felt der er ved siden af spillers felt og samme retning på spilleren
+   Hvis det felt ikke er tom så skal den flytte den nuværende spiller til den givne felt som er target og spillers heading
+     */
     public void moveForward(@NotNull Player player) {
         if (player.board == board) {
             Space space = player.getSpace();
@@ -336,14 +356,24 @@ public class GameController {
     }
 
 
-    // TODO Assignment V2
+    /*
+    I metoden fastForward deklareres 2 forskellige Spaces
+    Den første space ved navnet currentplayerSpace giver sig selv, det er den nuværende spillers felt
+    den anden space ved navnet nextspace er den space som er ved siden af currentplayerSpace og i samme retning som den nuværende spiller
+    I den sidste linje bruges metoden moveCurrentPlayerToSpace som tager en space som parameter.
+    Den space er det felt der er ved siden af nextSpace og i samme retning som den nuværende spiller
+     */
     public void fastForward(@NotNull Player player) {
         Space currentPlayerSpace = board.getCurrentPlayer().getSpace();
         Space nextSpace = board.getNeighbour(currentPlayerSpace, board.getCurrentPlayer().getHeading());
         moveCurrentPlayerToSpace(board.getNeighbour(nextSpace, board.getCurrentPlayer().getHeading()));
     }
 
-    // TODO Assignment V2
+    /*
+    I metoden turnRight findes til at starte med den nuværende spillers retning og gemmes i currentPlayerHeading
+    Derefter laves et switch statement som tager currentPlayerHeading som parameter og tjekker hvis retning på spilleren er nord for eksempel så sætter den retningen til at være øst i stedet
+    Efter switch statement sættes retning på spilleren til den nye retning ved brug af setHeading metoden under player klassen
+     */
     public void turnRight(@NotNull Player player) {
         Heading currentPlayerHeading = board.getCurrentPlayer().getHeading();
         switch (currentPlayerHeading) {
@@ -359,7 +389,9 @@ public class GameController {
         player.setHeading(currentPlayerHeading);
     }
 
-    // TODO Assignment V2
+    /*
+    I turnLeft metoden udføres præcis det samme som turnRight men modsat i stedet
+     */
     public void turnLeft(@NotNull Player player) {
         Heading currentPlayerHeading = board.getCurrentPlayer().getHeading();
         switch (currentPlayerHeading) {

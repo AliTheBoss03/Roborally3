@@ -122,11 +122,27 @@ public class AppController implements Observer {
         }
     }
 
+    /*
+     * Metoden savegame bruges som et knap ind i spillet til at oprette spillet ind i databasen og dermed gemmes spillet i databasen så den kan loades senere
+     * I metoden oprettes et IRepository som bruges til at kunne kalde metoden createGameInDB
+     * Ind i metoden tages udgangspunkt i den gameboard som spillet foregår på
+     */
     public void saveGame() {
         IRepository repo = RepositoryAccess.getRepository();
         repo.createGameInDB(gameController.board);
     }
-
+/*
+Metoden loadGame startes ud med et if statement der tjekker om der er et gameboard i gang, og dermed udføres koden ikke medmindre der ikke er en gameboard ignag
+Der oprettes et IRepository som forrige metode for at kunne hente metoden loadGameFromDB og metoden getGames
+Der oprettes en liste med typen GameInDB og den repository bruges til at kalde metoden getGames som returnerer alle de gemte spil
+I den næste linje oprettes en Choice dialog som er et valgs vindue som popper op når der bliver trykket på loadgame, i den tages udgangspunkt i gameList som er den liste med de gemte games
+Der sættes en titel for valgs vinduet og dermed også en overskrift
+Resultaterne bliver fremvist og der ventes på et valg fra brugeren
+Nedenunder bliver en if-statement udført hvis der er valgt et valg ved brug af isPresent som returnerer en boolean
+ind i if statement oprettes et board med metoden loadGameFromDB som tager en id på det valgte board
+nedenunder oprettes et gamecontroller med den board er blevet loadet i linjen over
+Og i sidste linje optrettes spillets view med den oprettede gamecontroller i linjen over.
+ */
     public void loadGame() {
         if ( gameController == null) {
             IRepository repo = RepositoryAccess.getRepository();
@@ -140,10 +156,6 @@ public class AppController implements Observer {
                Board board = repo.loadGameFromDB(result1.get().id);
                 gameController = new GameController(board);
                 roboRally.createBoardView(gameController);
-
-
-
-
             }
         }
     }
