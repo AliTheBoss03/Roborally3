@@ -36,7 +36,7 @@ import java.util.List;
 public class Space extends Subject {
 
     public class space {
-        // attributter og metoder for din modelklasse
+
 
         public void runGame() {
             while (!isGameFinished()) {
