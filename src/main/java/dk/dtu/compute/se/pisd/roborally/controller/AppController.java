@@ -49,7 +49,7 @@ public class AppController implements Observer {
 
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
 
-    final private List<String> BOARD_OPTIONS = Arrays.asList("defaultbord","defaultboard2");
+    final private List<String> BOARD_OPTIONS = Arrays.asList("Board 1","Board 2");
 
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
 
@@ -75,6 +75,8 @@ public class AppController implements Observer {
         dialog2.setHeaderText("Select board");
         Optional<String> result2 = dialog2.showAndWait();
 
+        String boardResult= String.valueOf(result2);
+
 
         if (result.isPresent()) {
             if (gameController != null) {
@@ -88,9 +90,11 @@ public class AppController implements Observer {
             // XXX the board should eventually be created programmatically or loaded from a file
             //     here we just create an empty board with the required number of players.
             //Board board = new Board(8,5);
-            Board board = LoadBoard.loadBoard("defaultboard");
 
-            Board board2 = LoadBoard.loadBoard("defaultboard2");
+            Board board = LoadBoard.loadBoard(boardResult);
+            System.out.println(boardResult);
+
+
 
 
             gameController = new GameController(board);
@@ -103,13 +107,7 @@ public class AppController implements Observer {
 
 // Json fil 2
             }
-            gameController = new GameController(board2);
-            int no2 = result.get();
-            for (int i = 0; i < no2; i++) {
-                Player player = new Player(board2, PLAYER_COLORS.get(i), "Player " + (i + 1));
-                board2.addPlayer(player);
-                player.setSpace(board2.getSpace(i % board2.width, i));
-            }
+
 
 
 
