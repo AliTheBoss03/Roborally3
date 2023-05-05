@@ -35,6 +35,24 @@ import java.util.List;
  */
 public class Space extends Subject {
 
+    public class space {
+
+
+        public void runGame() {
+            while (!isGameFinished()) {
+                // opdater spillet her
+            }
+
+            System.exit(0);
+        }
+
+        private boolean isGameFinished() {
+            // tjek om spillet er færdigt og returner true/false
+            return false;
+        }
+    }
+
+
     private List<Heading> walls = new ArrayList<>();
 
     private List<Fieldaction> actions = new ArrayList<>();

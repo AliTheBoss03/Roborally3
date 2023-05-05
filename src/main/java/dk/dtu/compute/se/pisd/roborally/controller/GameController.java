@@ -175,25 +175,19 @@ public class GameController {
                         ((Checkpoint) checkingPlayer.getSpace()).playPassedCheckpoint(checkingPlayer);
                     }
                     if (checkingPlayer.getCheckpointCount() == board.finaleCheckpoint) {
-                        checkingPlayer.setColor("purple");
-                    }
-                    if (checkingPlayer.getCheckpointCount() == 6) {
-                        System.out.println(checkingPlayer.getName() + " player har vundet, TILLYKKE!");
-                        // Set the winner's color to yellow
-                        checkingPlayer.setColor("yellow");
-                    }
-                }
+                        if (checkingPlayer.getCheckpointCount() == 6) {
+                            System.out.println(checkingPlayer.getName() + " har vundet, TILLYKKE!");
 
-                // Check hvis der er en vinder
-                for (int i = 0; i < 2; i++) {
-                    Player checkingPlayer = board.getPlayer(i);
-                    if (checkingPlayer.getCheckpointCount() == 5) {
-                        // There is a winner, end the game
-                        board.setPhase(Phase.END_OF_GAME);
-                        return;
+                            checkingPlayer.setColor("yellow");
+                        }
                     }
-                }
 
+        // Check if the game has ended
+        if (board.getPhase() == Phase.END_OF_GAME) {
+            System.out.println("Game has ended.");
+            // Perform end game actions here, e.g. print result and prompt for new game
+        }
+    }
 
 
                 if (card!=null) {
@@ -432,5 +426,7 @@ For eksempel hvis det er FORWARD command kaldes metoden moveForward.
      * A method called when no corresponding controller operation is implemented yet. This
      * should eventually be removed.
      */
+
+
 
 }
