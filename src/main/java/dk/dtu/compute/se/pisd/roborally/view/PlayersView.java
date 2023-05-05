@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.RoboRally;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Checkpoint;
@@ -75,10 +76,13 @@ public class PlayersView extends TabPane implements ViewObserver {
                 }
             if(current.getCheckpointCount ()==6)
                 System.out.println("Player " + current.getName () + " wins!");
-            }
+
+
         }
-        
-    }
+        }
+
+
+}
 
 
 
