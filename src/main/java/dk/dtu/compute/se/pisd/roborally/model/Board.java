@@ -227,7 +227,7 @@ public class Board extends Subject {
         // status of the game
 
         return "Phase: " + getPhase().name() +
-                ", Player = " + getCurrentPlayer().getName() + ", Moves = " + getCurrentPlayer().getMoveCount();
+                ", Player = " + getCurrentPlayer().getName() + ", Moves = " + getCurrentPlayer().getMoveCount() + ", Checkpoint count = " + getCurrentPlayer().getCheckpointCount();
     }
 
 
