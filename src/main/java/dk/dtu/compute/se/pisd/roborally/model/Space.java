@@ -36,6 +36,7 @@ import java.util.List;
 public class Space extends Subject {
 
     private List<Heading> walls = new ArrayList<>();
+
     private List<Fieldaction> actions = new ArrayList<>();
 
     public final Board board;
@@ -43,7 +44,9 @@ public class Space extends Subject {
     public final int x;
     public final int y;
 
+
     private Player player;
+
 
     public Space(Board board, int x, int y) {
         this.board = board;

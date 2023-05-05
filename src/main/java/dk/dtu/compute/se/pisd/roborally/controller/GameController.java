@@ -164,6 +164,34 @@ public class GameController {
             if (step >= 0 && step < Player.NO_REGISTERS) {
                 CommandCard card = currentPlayer.getProgramField(step).getCard();
                 Command command = null;
+
+                for (int i = 0; i < 2; i++) {
+                    Player checkingPlayer = board.getPlayer(i);
+                    if (checkingPlayer.getSpace() instanceof Checkpoint) {
+                        ((Checkpoint) checkingPlayer.getSpace()).playPassedCheckpoint(checkingPlayer);
+                    }
+                    if (checkingPlayer.getCheckpointCount() == board.finaleCheckpoint) {
+                        checkingPlayer.setColor("purple");
+                    }
+                    if (checkingPlayer.getCheckpointCount() == 6) {
+                        System.out.println(checkingPlayer.getName() + " player har vundet, TILLYKKE!");
+                        // Set the winner's color to yellow
+                        checkingPlayer.setColor("yellow");
+                    }
+                }
+
+                // Check hvis der er en vinder
+                for (int i = 0; i < 2; i++) {
+                    Player checkingPlayer = board.getPlayer(i);
+                    if (checkingPlayer.getCheckpointCount() == 5) {
+                        // There is a winner, end the game
+                        board.setPhase(Phase.END_OF_GAME);
+                        return;
+                    }
+                }
+
+
+
                 if (card!=null) {
                     command = card.command;
                     executeCommand(currentPlayer, command);

@@ -39,6 +39,9 @@ public class Board extends Subject {
 
     public final int width;
 
+
+    public int  finaleCheckpoint;
+
     public final int height;
 
     public final String boardName;
@@ -66,9 +69,11 @@ public class Board extends Subject {
             for(int y = 0; y < height; y++) {
                 Space space = new Space(this, x, y);
                 spaces[x][y] = space;
-                if(x == 4 && y == 1) {
+                if(x == 4 && y == 1)
+                    space = new Checkpoint(this,x,y);
+                {
                     space.getWalls().add(Heading.SOUTH);
-                    space = new Checkpoint(this,x,y,1);
+
                 }
             }
         }
@@ -77,7 +82,7 @@ public class Board extends Subject {
     }
 
     public Board(int width, int height) {
-        this(width, height, "defaultboard");
+        this(width, height, "defaultboard" +"defaultboard2");
     }
 
     public Integer getGameId() {
@@ -219,6 +224,7 @@ public class Board extends Subject {
         // this is actually a view aspect, but for making assignment V1 easy for
         // the students, this method gives a string representation of the current
         // status of the game
+
 
         // TODO V1: add the move count to the status message
         // XXX: V2 changed the status so that it shows the phase, the current player and the number of steps

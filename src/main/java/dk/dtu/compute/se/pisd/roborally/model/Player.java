@@ -24,6 +24,8 @@ package dk.dtu.compute.se.pisd.roborally.model;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
 
 /**
@@ -33,6 +35,29 @@ import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
  *
  */
 public class Player extends Subject {
+
+    private int maxCheckpoints = 0;
+
+    public int[] xcheckpoints = new int[6];
+    public int[] ycheckpoints = new int[6];
+
+    public int[] xcoords = new int[6];
+    public int[] ycoords = new int[6];
+
+    public Player findvinderen (List<Player> players) {
+        Player winner = null;
+        for (Player player : players) {
+            if (player.getCheckpointCount() == 6) {
+                winner = player;
+                maxCheckpoints = player.getCheckpointCount();
+                System.out.println(player.getName () + " winner");
+            } else if (player.getCheckpointCount() == maxCheckpoints) {
+                winner = null;
+            }
+        }
+        return winner;
+
+    }
 
     final public static int NO_REGISTERS = 5;
     final public static int NO_CARDS = 8;
@@ -50,6 +75,18 @@ public class Player extends Subject {
     private CommandCardField[] cards;
 
     public Player(@NotNull Board board, String color, @NotNull String name) {
+        xcoords[0] = 4;
+        ycoords[0] = 1;
+        xcoords[1] = 6;
+        ycoords[1] = 2;
+        xcoords[2] = 3;
+        ycoords[2] = 2;
+        xcoords[3] = 1;
+        ycoords[3] = 4;
+        xcoords[4] = 3;
+        ycoords[4] = 3;
+        xcoords[5] = 2;
+        ycoords[5] = 4;
         this.board = board;
         this.name = name;
         this.color = color;
@@ -66,7 +103,6 @@ public class Player extends Subject {
             cards[i] = new CommandCardField(this);
         }
     }
-
 
     public String getName() {
         return name;
@@ -144,11 +180,14 @@ public class Player extends Subject {
     }
 
 
+    public void incrementCheckpointCount() {
+        maxCheckpoints++;
+    }
+
+    public int getCheckpointCount() {
+        return maxCheckpoints;
 
 
+    }
 }
-
-
-
-
 
