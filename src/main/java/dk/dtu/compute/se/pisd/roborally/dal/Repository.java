@@ -412,7 +412,8 @@ Hvis field ikke er tom så sættes Visibile til at være true og dermed visible.
                 field = player.getProgramField(pos);
             } else if (type == FIELD_TYPE_HAND) {
                 player.getCardField(pos);
-            } else {
+            }
+            else {
                 field = null;
             }
             if (field != null) {
