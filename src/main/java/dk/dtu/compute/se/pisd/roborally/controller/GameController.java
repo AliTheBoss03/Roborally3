@@ -24,7 +24,6 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 
 /**
  * ...
@@ -204,6 +203,7 @@ public class GameController {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
                     step++;
+                    executeFieldActions();
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
                         board.setStep(step);
@@ -416,6 +416,17 @@ For eksempel hvis det er FORWARD command kaldes metoden moveForward.
             return true;
         } else {
             return false;
+        }
+    }
+    public void executeFieldActions(){
+        for(int i = 0; i < board.getPlayersNumber(); i++){
+            Player player = board.getPlayer(i);
+            if(player != null){
+                Space space = player.getSpace();
+                for (Fieldaction action: space.getActions() ) {
+                    action.doAction(this, space);
+                }
+            }
         }
     }
 

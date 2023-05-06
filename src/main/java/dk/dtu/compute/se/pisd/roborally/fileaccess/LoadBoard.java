@@ -8,6 +8,7 @@ import dk.dtu.compute.se.pisd.roborally.fileaccess.model.BoardTemplate;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.model.SpaceTemplate;
 import dk.dtu.compute.se.pisd.roborally.controller.Fieldaction;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
+import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 
 import java.io.*;
@@ -30,11 +31,7 @@ public class LoadBoard {
     public static Board loadBoard(String boardname) {
         if (boardname == null) {
             boardname = DEFAULTBOARD;
-
-
         }
-
-
         // In simple cases, we can create a Gson object with new Gson():
         GsonBuilder simpleBuilder = new GsonBuilder().
                 registerTypeAdapter(Fieldaction.class, new Adapter<Fieldaction>());
@@ -46,14 +43,10 @@ public class LoadBoard {
             // TODO these constants should be defined somewhere
             return new Board(8,8);
         }
-
-
-
         Board result;
         // FileReader fileReader = null;
         JsonReader reader = null;
         try {
-            // fileReader = new FileReader(filename);
             reader = gson.newJsonReader(new InputStreamReader(inputStream));
             BoardTemplate template = gson.fromJson(reader, BoardTemplate.class);
 
@@ -62,7 +55,10 @@ public class LoadBoard {
                 Space space = result.getSpace(spaceTemplate.x, spaceTemplate.y);
                 if (space != null) {
                     space.getActions().addAll(spaceTemplate.actions);
-                    space.getWalls().addAll(spaceTemplate.walls);
+                    for (Heading wall: spaceTemplate.walls) {
+                        space.addWall(wall);
+                    }
+                   // space.getWalls().addAll(spaceTemplate.walls);
                 }
             }
             reader.close();

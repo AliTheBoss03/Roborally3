@@ -97,6 +97,7 @@ public class AppController implements Observer {
 
 
 
+
             gameController = new GameController(board);
             int no = result.get();
             for (int i = 0; i < no; i++) {

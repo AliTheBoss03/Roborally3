@@ -22,6 +22,8 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.Fieldaction;
+import dk.dtu.compute.se.pisd.roborally.controller.Walls;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
@@ -108,43 +110,52 @@ public class SpaceView extends StackPane implements ViewObserver {
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
         }
-
-        Pane wallsPane = new Pane();
-        Rectangle rectangle =
-                new Rectangle(0.0, 0.0, SPACE_WIDTH, SPACE_HEIGHT);
-        rectangle.setFill(Color.TRANSPARENT);
-        wallsPane.getChildren().add(rectangle);
-        for (Heading heading : space.getWalls()) {
-            switch (heading) {
-                case SOUTH:
-                    Line line = new Line(2, 2, 2, SPACE_WIDTH);
-                    line.setStroke(Color.RED);
-                    line.setStrokeWidth(4);
-                    wallsPane.getChildren().add(line);
-                    break;
-                case WEST:
-                    break;
-                case NORTH:
-                    break;
-                case EAST:
-                    break;
-            }
-        }
-        this.getChildren().add(wallsPane);
-
     }
+
 
 
     @Override
     public void updateView(Subject subject) {
+        this.getChildren().clear();
         if (subject == this.space) {
+            for (Fieldaction action:space.getActions() ) {
+                if (action instanceof Walls) {
+                    drawWalls();
+                }
+            }
+            drawWalls();
             updatePlayer();
         }
 
-
-
-
-
     }
 
+    public void drawWalls() {
+        Pane wallsPane = new Pane();
+        Rectangle rectangle =
+                new Rectangle(0.0, 0.0, SPACE_WIDTH, SPACE_HEIGHT);
+        rectangle.setFill(Color.RED);
+        wallsPane.getChildren().add(rectangle);
+        Line line = new Line();
+        line.setStroke(Color.RED);
+        line.setStrokeWidth(4);
+        for (Heading heading : space.getWalls()) {
+            switch (heading) {
+                case SOUTH:
+                    line = new Line(2, SPACE_HEIGHT - 2, SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
+                    break;
+                case WEST:
+                    line = new Line(2, 2, 2, SPACE_HEIGHT - 2);
+                    break;
+                case NORTH:
+                    line = new Line(2, 2, SPACE_WIDTH - 2, 2);
+                    break;
+                case EAST:
+                    line = new Line(SPACE_WIDTH - 2, 2, SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
+                    break;
+            }
+
+            wallsPane.getChildren().add(line);
+        }
+        this.getChildren().add(wallsPane);
+    }
 }

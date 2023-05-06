@@ -3,6 +3,18 @@
   "height": 8,
   "spaces": [
     {
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.Walls",
+          "INSTANCE": {
+            "heading": "NORTH"
+          }
+        }
+      ],
+      "x": 4,
+      "y": 3
+    },
+    {
       "walls": [
         "EAST"
       ],
