@@ -58,12 +58,24 @@ public class PlayersView extends TabPane implements ViewObserver {
     }
 
     @Override
+    //Denne metode tager et Subject objekt som inputparameter og kaldes, når Subject objektet opdateres
     public void updateView(Subject subject) {
 
-        if (subject == board) {
+        //Denne betingelse tjekker, om det opdaterede Subject objekt er et Board objekt.
+        if (subject == board)
+        {
+            /*Her oprettes en variabel current og sættes til den nuværende spiller på brættet.
+             Derefter opdateres visningen, så den valgte spiller er markeret i brugergrænsefladen.*/
             Player current = board.getCurrentPlayer();
             this.getSelectionModel().select(board.getPlayerNumber(current));
+            /*Her udskrives en besked i konsollen, der viser den aktuelle spillers navn,
+            deres nuværende position på brættet og antallet af checkpoints, som spilleren har passeret.*/
             System.out.println("player: " + current.getName () + ": (" + current.getSpace ().x + ", " + current.getSpace ().y + ") has checkpoints: " + current.getCheckpointCount ());
+            /*Dette er en løkke, der gennemgår spillerens checkpoint-koordinater
+            og sammenligner dem med spillerens nuværende koordinater på brættet.
+            Hvis spilleren er nået til et checkpoint, der ikke tidligere er blevet passeret,
+            opdateres spillerens checkpoint-tæller og checkpoint-koordinaterne opdateres,
+            så de nu er markeret som passeret.*/
             for (int i = 0; i < 6; i++){
                 if ((current.getSpace().x == current.xcoords[i]) && (current.getSpace ().y == current.ycoords[i])){
                     if(!(current.xcheckpoints[i] == current.xcoords[i]) && !(current.ycheckpoints[i] == current.ycoords[i]))
@@ -74,6 +86,8 @@ public class PlayersView extends TabPane implements ViewObserver {
                             current.ycoords[i] = -1;
                     }
                 }
+            /*Her tjekkes det, om spilleren har passeret alle checkpoints,
+            og hvis de har, udskrives en besked i konsollen, der viser, at spilleren har vundet.*/
             if(current.getCheckpointCount ()==6)
                 System.out.println("Player " + current.getName () + " wins!");
 
