@@ -36,24 +36,44 @@ import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
  */
 public class Player extends Subject {
 
-    private int maxCheckpoints = 0;
+   //Her oprettes en privat variabel af typen integer kaldet maxCheckpoints og starter med værdien 0.
+   private int maxCheckpoints = 0;
+   //Her oprettes offentlige arrays af typen integer kaldet xcheckpoints og ycheckpoints med en længde på 6.
     public int[] xcheckpoints = new int[6];
     public int[] ycheckpoints = new int[6];
 
+//Her oprettes offentlige arrays af typen integer kaldet xcoords og ycoords med en længde på 6.
     public int[] xcoords = new int[6];
     public int[] ycoords = new int[6];
 
+    //Her oprettes en offentlig metode kaldet findvinderen, der tager en liste af Player objekter som parameter og returnerer en Player objekt
     public Player findvinderen (List<Player> players) {
+        //Her oprettes en Player objekt kaldet winner og initialiseres til null.
         Player winner = null;
+        //Her løber vi igennem hver Player objekt i listen players.
         for (Player player : players) {
+           //Her tjekker vi, om den aktuelle Player objekt har en checkpointCount på 6.
             if (player.getCheckpointCount() == 6) {
+               /*Hvis Player objektet har en
+                checkpointCount på 6, så sættes winner variablen til
+                den pågældende Player, og maxCheckpoints variablen sættes til
+                Player objektets checkpointCount, og en besked udskrives,
+                der siger, at Player objektet har vundet */
                 winner = player;
                 maxCheckpoints = player.getCheckpointCount();
                 System.out.println(player.getName () + " winner");
-            } else if (player.getCheckpointCount() == maxCheckpoints) {
-                winner = null;
+            }
+            /*Hvis Player objektets checkpointCount ikke
+             er 6, så tjekker vi, om checkpointCount er lig med
+              maxCheckpoints variablen*/
+            else if (player.getCheckpointCount() == maxCheckpoints)
+            {
+                //Hvis Player objektets checkpointCount er lig med maxCheckpoints, så sættes winner variablen til null.
+                    winner = null;
             }
         }
+        /*Her returneres winner variablen (som vil være null, hvis
+        der ikke er nogen vinder, eller en Player objekt, hvis der er en vinder).*/
         return winner;
 
     }
@@ -179,10 +199,14 @@ public class Player extends Subject {
     }
 
 
+    /*Denne metode inkrementerer maxCheckpoints-variablen med en,
+     hvilket betyder, at antallet af checkpoint,
+    som spilleren har passeret, øges med 1.*/
     public void incrementCheckpointCount() {
         maxCheckpoints++;
     }
-
+    /*Denne metode returnerer værdien af maxCheckpoints-variablen,
+    som er antallet af checkpoints, som spilleren har passeret.*/
     public int getCheckpointCount() {
         return maxCheckpoints;
 

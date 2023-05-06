@@ -44,8 +44,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public class SpaceView extends StackPane implements ViewObserver {
 
-    final public static int SPACE_HEIGHT = 55; // 60; // 75;
-    final public static int SPACE_WIDTH = 55;  // 60; // 75;
+    final public static int SPACE_HEIGHT = 60; // 60; // 75;
+    final public static int SPACE_WIDTH = 60;  // 60; // 75;
 
     public final Space space;
 
@@ -87,10 +87,6 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.setStyle("-fx-background-color: pink;");
         }
 
-
-        //updatePlayer();
-
-        // This space view should listen to changes of the space
         space.attach(this);
         update(space);
     }
@@ -123,7 +119,7 @@ public class SpaceView extends StackPane implements ViewObserver {
                 case SOUTH:
                     Line line = new Line(2, 2, 2, SPACE_WIDTH);
                     line.setStroke(Color.RED);
-                    line.setStrokeWidth(5);
+                    line.setStrokeWidth(4);
                     wallsPane.getChildren().add(line);
                     break;
                 case WEST:
@@ -135,6 +131,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
         }
         this.getChildren().add(wallsPane);
+
     }
 
 

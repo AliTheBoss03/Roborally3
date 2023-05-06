@@ -61,11 +61,19 @@ public class Board extends Subject {
 
     private boolean stepMode;
 
-    public Board(int width, int height, @NotNull String boardName) {
+    /*Her oprettes en Board klasse med tre inputparametre - bredden, højden og navnet på brættet.
+     Derefter oprettes variablerne boardName, width, height og spaces.
+     spaces er et to dimensionelt array af Space objekter med størrelsen width x height.*/
+     public Board(int width, int height, @NotNull String boardName) {
         this.boardName = boardName;
         this.width = width;
         this.height = height;
         spaces = new Space[width][height];
+
+
+        /*Her oprettes Space objekter i hver celle i spaces-arrayet, og der sættes en South væg på alle cellerne.
+         Hvis x er 4 og y er 1, oprettes et Checkpoint objekt og sættes i denne celle.
+         Hver Space objekt oprettes med den aktuelle Board instans, x og y koordinaterne som inputparametre.*/
         for (int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
                 Space space = new Space(this, x, y);
@@ -78,7 +86,7 @@ public class Board extends Subject {
                 }
             }
         }
-
+//Her sættes stepMode variablen til false.
         this.stepMode = false;
     }
 
