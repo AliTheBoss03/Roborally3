@@ -89,9 +89,6 @@ public class PlayerView extends Tab implements ViewObserver {
             }
         }
 
-        // XXX  the following buttons should actually not be on the tabs of the individual
-        //      players, but on the PlayersView (view for all players). This should be
-        //      refactored.
 
         finishButton = new Button("Finish Programming");
         finishButton.setOnAction( e -> gameController.finishProgrammingPhase());
@@ -202,23 +199,12 @@ public class PlayerView extends Tab implements ViewObserver {
                 playerInteractionPanel.getChildren().clear();
 
                 if (player.board.getCurrentPlayer() == player) {
-                    // TODO Assignment V3: these buttons should be shown only when there is
-                    //      an interactive command card, and the buttons should represent
-                    //      the player's choices of the interactive command card. The
-                    //      following is just a mockup showing two options
                     Board board = player.board;
                     CommandCardField currentField = player.getProgramField(board.getStep());
                     CommandCard currentCard = currentField.getCard();
                     Command currentCommand = currentCard.command;
                     List<Command> options = currentCommand.getOptions();
-
-                    //for (Command option: options) {
-                      //  Button optionButton = new Button(option.displayName);
-                        //optionButton.setOnAction( e -> gameController.executeCommandOptionAndContinue(options));
-                        //optionButton.setDisable(false);
-                        //playerInteractionPanel.getChildren().add(optionButton);
-                    //}
-                     Button optionButton = new Button("Left");
+                    Button optionButton = new Button("Left");
                     optionButton.setOnAction( e -> gameController.executeCommandOptionAndContinue(Command.LEFT));
                     optionButton.setDisable(false);
                     playerInteractionPanel.getChildren().add(optionButton);
@@ -226,7 +212,7 @@ public class PlayerView extends Tab implements ViewObserver {
                     optionButton = new Button("Right");
                     optionButton.setOnAction( e -> gameController.executeCommandOptionAndContinue(Command.RIGHT));
                     optionButton.setDisable(false);
-                        playerInteractionPanel.getChildren().add(optionButton);
+                    playerInteractionPanel.getChildren().add(optionButton);
 
                 }
             }

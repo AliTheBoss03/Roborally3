@@ -30,10 +30,7 @@ import dk.dtu.compute.se.pisd.roborally.model.Player;
 import javafx.scene.control.TabPane;
 
 /**
- * ...
- *
- * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @author Sofian Benomar
  */
 public class PlayersView extends TabPane implements ViewObserver {
 

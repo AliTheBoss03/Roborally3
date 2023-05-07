@@ -25,12 +25,6 @@ import dk.dtu.compute.se.pisd.roborally.model.*;
 import org.jetbrains.annotations.NotNull;
 
 
-/**
- * ...
- *
- * @author Ekkart Kindler, ekki@dtu.dk
- *
- */
 public class GameController {
 
     final public Board board;
@@ -39,15 +33,12 @@ public class GameController {
         this.board = board;
     }
 
-    /**
-     * This is just some dummy controller operation to make a simple move to see something
-     * happening on the board. This method should eventually be deleted!
-     *
-     * @param space the space to which the current player should move
-     */
     /*
     Denne metode tager udgangspunkt i den nuværende spiller og flytter spilleren til den valgte space hvis den er ledig
     Metoden sætter også movecounter op hver gang spilleren bevæges.
+     */
+    /**
+     * @author Ali Masoud
      */
     public void moveCurrentPlayerToSpace(@NotNull Space space)  {
         if (space.getPlayer() == null) {
@@ -67,19 +58,13 @@ public class GameController {
                 nextPlayer = board.getPlayer(nextPlayerNumber);
                 board.setCurrentPlayer(nextPlayer);
             }
-            // TODO Assignment V1: method should be implemented by the students:
-            //   - the current player should be moved to the given space
-            //     (if it is free()
-            //   - and the current player should be set to the player
-            //     following the current player
-            //   - the counter of moves in the game should be increased by one
-            //     if and when the player is moved (the counter and the status line
-            //     message needs to be implemented at another place)
         }
     }
 
 
-    // XXX: V2
+    /**
+     * @author Ali Masoud
+     */
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
@@ -101,15 +86,18 @@ public class GameController {
             }
         }
     }
-
-    // XXX: V2
+    /**
+     * @author Ali Masoud
+     */
     private CommandCard generateRandomCommandCard() {
         Command[] commands = Command.values();
         int random = (int) (Math.random() * commands.length);
         return new CommandCard(commands[random]);
     }
 
-    // XXX: V2
+    /**
+     * @author Ali Masoud
+     */
     public void finishProgrammingPhase() {
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
@@ -118,7 +106,9 @@ public class GameController {
         board.setStep(0);
     }
 
-    // XXX: V2
+    /**
+     * @author Ali Masoud
+     */
     private void makeProgramFieldsVisible(int register) {
         if (register >= 0 && register < Player.NO_REGISTERS) {
             for (int i = 0; i < board.getPlayersNumber(); i++) {
@@ -129,7 +119,9 @@ public class GameController {
         }
     }
 
-    // XXX: V2
+    /**
+     * @author Ali Masoud
+     */
     private void makeProgramFieldsInvisible() {
         for (int i = 0; i < board.getPlayersNumber(); i++) {
             Player player = board.getPlayer(i);
@@ -140,26 +132,34 @@ public class GameController {
         }
     }
 
-    // XXX: V2
+    /**
+     * @author Ali Masoud
+     */
     public void executePrograms() {
         board.setStepMode(false);
         continuePrograms();
     }
 
-    // XXX: V2
+    /**
+     * @author Ali Masoud
+     */
     public void executeStep() {
         board.setStepMode(true);
         continuePrograms();
     }
 
-    // XXX: V2
+    /**
+     * @author Ali Masoud
+     */
     private void continuePrograms() {
         do {
             executeNextStep();
         } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
     }
 
-    // XXX: V2
+    /**
+     * @author Ali Masoud
+     */
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
@@ -180,11 +180,8 @@ public class GameController {
                             checkingPlayer.setColor("yellow");
                         }
                     }
-
-        // Check if the game has ended
         if (board.getPhase() == Phase.END_OF_GAME) {
             System.out.println("Game has ended.");
-            // Perform end game actions here, e.g. print result and prompt for new game
         }
     }
 
@@ -226,6 +223,9 @@ public class GameController {
     Phase på spillet sættes til Activation Phase og dermed fortsættes det
     Efter at har erklæret hvad currentplayer er, udføres if statement hvis fasen er aktivations fasen og hvis der er en spiller i spillet
      */
+    /**
+     * @author Ali Masoud
+     */
     public void executeCommandOptionAndContinue(Command option){
         executeCommand(board.getCurrentPlayer(), option);
         board.setPhase(Phase.ACTIVATION);
@@ -254,11 +254,9 @@ public class GameController {
                     }
                 }
             } else {
-                // this should not happen
                 assert false;
             }
         } else {
-            // this should not happen
             assert false;
         }
     }
@@ -268,12 +266,11 @@ Metoden har 2 parametre som er en player og den command som skal udføres
 Der oprettes et switch statement som tager en command og fortæller hvad systemet skal gøre i de forskellige commands
 For eksempel hvis det er FORWARD command kaldes metoden moveForward.
  */
-    // XXX: V2
+    /**
+     * @author Ali Masoud
+     */
     private void executeCommand(@NotNull Player player, Command command) {
         if (player != null && player.board == board && command != null) {
-            // XXX This is a very simplistic way of dealing with some basic cards and
-            //     their execution. This should eventually be done in a more elegant way
-            //     (this concerns the way cards are modelled as well as the way they are executed).
 
             switch (command) {
                 case FORWARD:
@@ -301,6 +298,9 @@ For eksempel hvis det er FORWARD command kaldes metoden moveForward.
    Der oprettes et felt som finder det felt der er ved siden af spillers felt og samme retning på spilleren
    Hvis det felt ikke er tom så skal den flytte den nuværende spiller til den givne felt som er target og spillers heading
      */
+    /**
+     * @author Ali Masoud
+     */
     public void moveForward(@NotNull Player player) {
         if (player.board == board) {
             Space space = player.getSpace();
@@ -311,13 +311,13 @@ For eksempel hvis det er FORWARD command kaldes metoden moveForward.
                 try {
                     moveToSpace(player, target, heading);
                 } catch (ImpossibleMoveException e) {
-                    // we don't do anything here  for now; we just catch the
-                    // exception so that we do no pass it on to the caller
-                    // (which would be very bad style).
                 }
             }
         }
     }
+    /**
+     * @author Ali Masoud
+     */
 
     void moveToSpace(@NotNull Player player, @NotNull Space space, @NotNull Heading heading) throws ImpossibleMoveException {
         assert board.getNeighbour(player.getSpace(), heading) == space; // make sure the move to here is possible in principle
@@ -325,14 +325,7 @@ For eksempel hvis det er FORWARD command kaldes metoden moveForward.
         if (other != null){
             Space target = board.getNeighbour(space, heading);
             if (target != null) {
-                // XXX Note that there might be additional problems with
-                //     infinite recursion here (in some special cases)!
-                //     We will come back to that!
                 moveToSpace(other, target, heading);
-
-                // Note that we do NOT embed the above statement in a try catch block, since
-                // the thrown exception is supposed to be passed on to the caller
-
                 assert target.getPlayer() == null : target; // make sure target is free now
             } else {
                 throw new ImpossibleMoveException(player, space, heading);
@@ -363,6 +356,9 @@ For eksempel hvis det er FORWARD command kaldes metoden moveForward.
     I den sidste linje bruges metoden moveCurrentPlayerToSpace som tager en space som parameter.
     Den space er det felt der er ved siden af nextSpace og i samme retning som den nuværende spiller
      */
+    /**
+     * @author Ali Masoud
+     */
     public void fastForward(@NotNull Player player) {
         Space currentPlayerSpace = board.getCurrentPlayer().getSpace();
         Space nextSpace = board.getNeighbour(currentPlayerSpace, board.getCurrentPlayer().getHeading());
@@ -373,6 +369,9 @@ For eksempel hvis det er FORWARD command kaldes metoden moveForward.
     I metoden turnRight findes til at starte med den nuværende spillers retning og gemmes i currentPlayerHeading
     Derefter laves et switch statement som tager currentPlayerHeading som parameter og tjekker hvis retning på spilleren er nord for eksempel så sætter den retningen til at være øst i stedet
     Efter switch statement sættes retning på spilleren til den nye retning ved brug af setHeading metoden under player klassen
+     */
+    /**
+     * @author Ali Masoud
      */
     public void turnRight(@NotNull Player player) {
         Heading currentPlayerHeading = board.getCurrentPlayer().getHeading();
@@ -391,6 +390,9 @@ For eksempel hvis det er FORWARD command kaldes metoden moveForward.
 
     /*
     I turnLeft metoden udføres præcis det samme som turnRight men modsat i stedet
+     */
+    /**
+     * @author Ali Masoud
      */
     public void turnLeft(@NotNull Player player) {
         Heading currentPlayerHeading = board.getCurrentPlayer().getHeading();
@@ -418,6 +420,9 @@ For eksempel hvis det er FORWARD command kaldes metoden moveForward.
             return false;
         }
     }
+    /**
+     * @author Ali Masoud
+     */
     public void executeFieldActions(){
         for(int i = 0; i < board.getPlayersNumber(); i++){
             Player player = board.getPlayer(i);
@@ -429,15 +434,6 @@ For eksempel hvis det er FORWARD command kaldes metoden moveForward.
             }
         }
     }
-
-
-
-
-    /**
-     * A method called when no corresponding controller operation is implemented yet. This
-     * should eventually be removed.
-     */
-
 
 
 }

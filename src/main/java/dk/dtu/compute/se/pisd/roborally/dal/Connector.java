@@ -6,6 +6,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+/**
+ * @author Ali Masoud
+ */
 
 
     public class Connector {
@@ -27,8 +30,7 @@ import java.sql.Statement;
 
                 createDatabaseSchema();
             } catch (SQLException e) {
-                // TODO we should try to diagnose and fix some problems here and
-                //      exit in a more graceful way
+
                 e.printStackTrace();
                 // Platform.exit();
             }
@@ -52,7 +54,6 @@ import java.sql.Statement;
                 connection.commit();
             } catch (SQLException e) {
                 e.printStackTrace();
-                // TODO error handling
                 try {
                     connection.rollback();
                 } catch (SQLException e1) {}

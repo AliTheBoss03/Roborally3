@@ -27,13 +27,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
-
 /**
- * ...
- *
- * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @author Sofian Benomar
  */
+
 public class Player extends Subject {
 
    //Her oprettes en privat variabel af typen integer kaldet maxCheckpoints og starter med værdien 0.

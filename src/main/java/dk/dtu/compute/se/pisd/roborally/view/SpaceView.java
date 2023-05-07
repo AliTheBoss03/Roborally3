@@ -38,12 +38,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * ...
- *
- * @author Ekkart Kindler, ekki@dtu.dk
- *
- */
+
 public class SpaceView extends StackPane implements ViewObserver {
 
     final public static int SPACE_HEIGHT = 60; // 60; // 75;
@@ -128,7 +123,9 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
 
     }
-
+    /**
+     * @author Ali Masoud
+     */
     public void drawWalls() {
         Pane wallsPane = new Pane();
         Rectangle rectangle =

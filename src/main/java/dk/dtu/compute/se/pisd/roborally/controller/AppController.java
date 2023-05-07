@@ -39,12 +39,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * ...
- *
- * @author Ekkart Kindler, ekki@dtu.dk
- *
- */
+
 public class AppController implements Observer {
 
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
@@ -63,6 +58,10 @@ public class AppController implements Observer {
     public AppController(@NotNull RoboRally roboRally) {
         this.roboRally = roboRally;
     }
+    /**
+     * @author Ali Masoud
+     * @author Amaan Ahmed
+     */
 
     public void newGame() {
         ChoiceDialog<Integer> dialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
@@ -80,16 +79,12 @@ public class AppController implements Observer {
 
         if (result.isPresent()) {
             if (gameController != null) {
-                // The UI should not allow this, but in case this happens anyway.
-                // give the user the option to save the game or abort this operation!
+
                 if (!stopGame()) {
                     return;
                 }
             }
 
-            // XXX the board should eventually be created programmatically or loaded from a file
-            //     here we just create an empty board with the required number of players.
-            //Board board = new Board(8,5);
 
             Board board = LoadBoard.loadBoard(boardResult);
             System.out.println(boardResult);
@@ -108,13 +103,6 @@ public class AppController implements Observer {
 
 // Json fil 2
             }
-
-
-
-
-
-            // XXX: V2
-            // board.setCurrentPlayer(board.getPlayer(0));
             gameController.startProgrammingPhase();
 
             roboRally.createBoardView(gameController);
@@ -125,6 +113,9 @@ public class AppController implements Observer {
      * Metoden savegame bruges som et knap ind i spillet til at oprette spillet ind i databasen og dermed gemmes spillet i databasen så den kan loades senere
      * I metoden oprettes et IRepository som bruges til at kunne kalde metoden createGameInDB
      * Ind i metoden tages udgangspunkt i den gameboard som spillet foregår på
+     */
+    /**
+     * @author Ali Masoud
      */
     public void saveGame() {
         IRepository repo = RepositoryAccess.getRepository();
@@ -142,6 +133,9 @@ ind i if statement oprettes et board med metoden loadGameFromDB som tager en id 
 nedenunder oprettes et gamecontroller med den board er blevet loadet i linjen over
 Og i sidste linje optrettes spillets view med den oprettede gamecontroller i linjen over.
  */
+    /**
+     * @author Ali Masoud
+     */
     public void loadGame() {
         if ( gameController == null) {
             IRepository repo = RepositoryAccess.getRepository();
@@ -159,15 +153,7 @@ Og i sidste linje optrettes spillets view med den oprettede gamecontroller i lin
         }
     }
 
-    /**
-     * Stop playing the current game, giving the user the option to save
-     * the game or to cancel stopping the game. The method returns true
-     * if the game was successfully stopped (with or without saving the
-     * game); returns false, if the current game was not stopped. In case
-     * there is no current game, false is returned.
-     *
-     * @return true if the current game was stopped, false otherwise
-     */
+
     public boolean stopGame() {
         if (gameController != null) {
 
@@ -207,7 +193,7 @@ Og i sidste linje optrettes spillets view med den oprettede gamecontroller i lin
 
     @Override
     public void update(Subject subject) {
-        // XXX do nothing for now
+
     }
 
 }

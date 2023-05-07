@@ -29,12 +29,7 @@ import java.util.List;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 
-/**
- * ...
- *
- * @author Ekkart Kindler, ekki@dtu.dk
- *
- */
+
 public class Board extends Subject {
 
 
@@ -221,10 +216,6 @@ public class Board extends Subject {
     }
 
     public String getStatusMessage() {
-        // this is actually a view aspect, but for making assignment V1 easy for
-        // the students, this method gives a string representation of the current
-        // status of the game
-
         return "Phase: " + getPhase().name() +
                 ", Player = " + getCurrentPlayer().getName() + ", Moves = " + getCurrentPlayer().getMoveCount() + ", Checkpoint count = " + getCurrentPlayer().getCheckpointCount();
     }

@@ -25,12 +25,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * ...
- *
- * @author Ekkart Kindler, ekki@dtu.dk
- *
- */
+
 public enum Command {
 
     // This is a very simplistic way of realizing different commands.
@@ -44,13 +39,6 @@ public enum Command {
     OPTION_LEFT_RIGHT("Left OR Right", LEFT, RIGHT);
 
     final public String displayName;
-
-    // XXX Assignment V3 (step 1)
-    // Command(String displayName) {
-    //     this.displayName = displayName;
-    // }
-    //
-    // replaced by the code below:
 
     final private List<Command> options;
 

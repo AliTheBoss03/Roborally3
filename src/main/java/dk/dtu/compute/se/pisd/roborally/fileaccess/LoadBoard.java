@@ -16,9 +16,7 @@ import java.io.*;
 
 
 /**
- * ...
- *
- * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Amaan Ahemd, Mohammad Haashir Khan
  */
 public class LoadBoard {
 
@@ -32,7 +30,6 @@ public class LoadBoard {
         if (boardname == null) {
             boardname = DEFAULTBOARD;
         }
-        // In simple cases, we can create a Gson object with new Gson():
         GsonBuilder simpleBuilder = new GsonBuilder().
                 registerTypeAdapter(Fieldaction.class, new Adapter<Fieldaction>());
         Gson gson = simpleBuilder.create();
@@ -44,7 +41,6 @@ public class LoadBoard {
             return new Board(8,8);
         }
         Board result;
-        // FileReader fileReader = null;
         JsonReader reader = null;
         try {
             reader = gson.newJsonReader(new InputStreamReader(inputStream));
@@ -58,7 +54,6 @@ public class LoadBoard {
                     for (Heading wall: spaceTemplate.walls) {
                         space.addWall(wall);
                     }
-                   // space.getWalls().addAll(spaceTemplate.walls);
                 }
             }
             reader.close();
@@ -99,19 +94,11 @@ public class LoadBoard {
         }
 
         ClassLoader classLoader = LoadBoard.class.getClassLoader();
-        // TODO: this is not very defensive, and will result in a NullPointerException
-        //       when the folder "resources" does not exist! But, it does not need
-        //       the file "simpleCards.json" to exist!
+
         String filename =
                 classLoader.getResource(BOARDSFOLDER).getPath() + "/" + name + "." + JSON_EXT;
 
-        // In simple cases, we can create a Gson object with new:
-        //
-        //   Gson gson = new Gson();
-        //
-        // But, if you need to configure it, it is better to create it from
-        // a builder (here, we want to configure the JSON serialisation with
-        // a pretty printer):
+
         GsonBuilder simpleBuilder = new GsonBuilder().
                 registerTypeAdapter(Fieldaction.class, new Adapter<Fieldaction>()).
                 setPrettyPrinting();

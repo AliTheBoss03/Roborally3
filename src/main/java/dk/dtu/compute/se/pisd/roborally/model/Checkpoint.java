@@ -1,5 +1,8 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
+/**
+ * @author Sofian Benomar
+ */
 /*Her oprettes en klasse kaldet Checkpoint
  som nedarver fra klassen Space. Der oprettes
  også en privat integer variabel

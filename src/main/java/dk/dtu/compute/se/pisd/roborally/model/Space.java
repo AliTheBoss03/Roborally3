@@ -27,12 +27,7 @@ import dk.dtu.compute.se.pisd.roborally.controller.Fieldaction;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * ...
- *
- * @author Ekkart Kindler, ekki@dtu.dk
- *
- */
+
 public class Space extends Subject {
 
 
