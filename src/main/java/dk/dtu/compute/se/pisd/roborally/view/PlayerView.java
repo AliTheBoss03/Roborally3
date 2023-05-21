@@ -40,30 +40,49 @@ import java.util.List;
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */
+
+//Klassen PlayerView repræsenterer visningen af en enkelt spiller i spillet. Den viser spillerens program (kommandokort) og kommandokort, samt knapper til at afslutte programmeringsfasen, udføre programmet og udføre det aktuelle kommandokort
 public class PlayerView extends Tab implements ViewObserver {
 
 
     private Player player;
 
+//top er en VBox, der indeholder visningselementerne for spilleren.
     private VBox top;
 
+//programLabel er en etiket, der viser teksten "Program".
     private Label programLabel;
+
+    //programPane er en GridPane, der indeholder visningerne af spillerens program (kommandokort).
     private GridPane programPane;
+
+//cardsLabel er en etiket, der viser teksten "Command Cards".
     private Label cardsLabel;
+
+    //cardsPane er en GridPane, der indeholder visningerne af spillerens kommandokort.
     private GridPane cardsPane;
 
     private CardFieldView[] programCardViews;
     private CardFieldView[] cardViews;
 
+    //buttonPanel er en VBox, der indeholder knapperne til afslutning, udførelse og trinvis udførelse af programmet.
     private VBox buttonPanel;
 
     private Button finishButton;
     private Button executeButton;
     private Button stepButton;
 
+    //playerInteractionPanel er en VBox, der indeholder visningselementerne til spillerens interaktion under udførelsen af programmet.
     private VBox playerInteractionPanel;
 
+    //gameController er en reference til GameController-objektet, der styrer spillet.
     private GameController gameController;
+
+    /*I konstruktøren oprettes og opsættes visningselementerne for spilleren. Knapperne og deres handlinger tilknyttes, og visningerne af spillerens program og kommandokort opdateres.
+
+Metoden updateView kaldes, når der sker en ændring i player.board-objektet (brættet, som spilleren er tilknyttet). Metoden opdaterer visningen af spillerens program baseret på den aktuelle fase i spillet og den aktuelle spiller. Knapperne og deres tilstande opdateres også baseret på den aktuelle fase.
+
+PlayerView er en del af brugergrænsefladen og er ansvarlig for at vise en enkelt spiller og opdatere visningen baseret på ændringer i spillet og spillerens tilstand.*/
 
     public PlayerView(@NotNull GameController gameController, @NotNull Player player) {
         super(player.getName());

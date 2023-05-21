@@ -74,19 +74,24 @@ public class Player extends Subject {
         return winner;
 
     }
-
+//NO_REGISTERS og NO_CARDS er konstante værdier, der angiver antallet af registre og kort, som spilleren har.
     final public static int NO_REGISTERS = 5;
     final public static int NO_CARDS = 8;
-
+//board er reference til det bræt, som spilleren er tilknyttet.
     final public Board board;
 
     private String name;
     private String color;
+
+   //moveCount holder styr på antallet af træk, som spilleren har foretaget.
     private int moveCount;
 
+//space er den plads på brættet, hvor spilleren befinder sig.
     private Space space;
     private Heading heading = SOUTH;
 
+    //program og cards er arrays af CommandCardField-objekter,
+    // der repræsenterer spillerens programmeringsfelt og kortfelt.
     private CommandCardField[] program;
     private CommandCardField[] cards;
 

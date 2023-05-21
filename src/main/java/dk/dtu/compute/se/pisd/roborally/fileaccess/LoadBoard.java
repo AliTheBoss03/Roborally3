@@ -18,8 +18,13 @@ import java.io.*;
 /**
  * @author Amaan Ahemd, Mohammad Haashir Khan
  */
+//LoadBoard-klassen indeholder metoder til indlæsning og gemmning af spillebræt i JSON-format.
 public class LoadBoard {
 
+    //loadBoard-metoden indlæser et spillebræt fra en JSON-fil. Hvis boardname er null,
+    // bruges standardbrættet ("defaultboard"). Metoden bruger Gson-biblioteket til at deserialisere JSON-data til en BoardTemplate-objekt.
+    // Derefter oprettes et nyt Board-objekt baseret på BoardTemplate, og alle rum, handlinger og vægge tilføjes i overensstemmelse med BoardTemplate.
+    // Til sidst returneres det resulterende Board-objekt.
     private static final String BOARDSFOLDER = "boards";
     private static final String DEFAULTBOARD = "defaultboard" +"defaultboard2";
 
@@ -73,7 +78,11 @@ public class LoadBoard {
         }
         return null;
     }
-
+    //saveBoard-metoden gemmer et spillebræt som en JSON-fil med det angivne navn.
+// Metoden opretter en BoardTemplate baseret på det givne Board-objekt ved at kopiere bredde,
+// højde og rum med tilhørende handlinger og vægge.
+// Derefter bruges Gson-biblioteket til at serialisere BoardTemplate-objektet til
+// JSON-format og skrive det til en fil med det angivne navn.
     public static void saveBoard(Board board, String name) {
         BoardTemplate template = new BoardTemplate();
         template.width = board.width;
@@ -127,5 +136,6 @@ public class LoadBoard {
             }
         }
     }
-
+//Begge metoder bruger en Adapter-klasse til at håndtere serialisering og deserialisering af objekter af typen Fieldaction.
+// Klasserne BoardTemplate og SpaceTemplate er brugt til midlertidig opbevaring af spillebrættets data under indlæsning og gemmning.
 }

@@ -34,20 +34,36 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
-
+//Klassen BoardView repræsenterer visningen af brættet i spillet
 public class BoardView extends VBox implements ViewObserver {
 
+    //board er referencen til brættet, som visningen er knyttet til.
     private Board board;
 
+    //mainBoardPane er en GridPane, der indeholder visningen af selve brættet.
     private GridPane mainBoardPane;
+
+    //spaces er en todimensional array af SpaceView-objekter, der repræsenterer visningen af hver enkelt plads på brættet.
     private SpaceView[][] spaces;
 
+    //playersView er en PlayersView-objekt, der repræsenterer visningen af spillerne.
     private PlayersView playersView;
 
+    //statusLabel er en Label, der viser den aktuelle statusbesked.
     private Label statusLabel;
 
+    //spaceEventHandler er en SpaceEventHandler, der håndterer museklik på pladserne på brættet
     private SpaceEventHandler spaceEventHandler;
 
+    /*I konstruktøren oprettes visningen af brættet ved at oprette SpaceView-objekter for hver plads på brættet og tilføje dem til mainBoardPane. Der oprettes også en SpaceEventHandler og knyttes til hver SpaceView for at håndtere museklik.
+
+Metoden updateView kaldes, når der sker en ændring i board-objektet. Den opdaterer statusbeskeden på statusLabel baseret på den aktuelle fase i spillet.
+
+Den indre klasse SpaceEventHandler er ansvarlig for at håndtere museklik på pladserne på brættet. Når der klikkes på en plads, opdateres spillet ved at flytte den aktuelle spiller til den valgte plads.
+
+Klassen implementerer også ViewObserver-grænsefladen for at kunne modtage opdateringer fra board-objektet og reagere på dem.
+
+BoardView er en del af brugergrænsefladen og er ansvarlig for at vise brættet og håndtere interaktioner med brættet.*/
     public BoardView(@NotNull GameController gameController) {
         board = gameController.board;
 

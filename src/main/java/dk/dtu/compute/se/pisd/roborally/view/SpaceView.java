@@ -38,14 +38,20 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
-
+//Klassen SpaceView repræsenterer visningen af et enkelt felt (space) på brættet i RoboRally-spillet.
+// Den er ansvarlig for at vise feltets udseende, herunder farven og eventuelle vægge eller spillere på feltet
 public class SpaceView extends StackPane implements ViewObserver {
 
+//SPACE_HEIGHT og SPACE_WIDTH angiver højden og bredden af feltet.
     final public static int SPACE_HEIGHT = 60; // 60; // 75;
     final public static int SPACE_WIDTH = 60;  // 60; // 75;
 
+    //space er en reference til det Space-objekt, som feltet repræsenterer.
     public final Space space;
 
+    /*Konstruktøren opsætter visningen af feltet ved at indstille størrelsen og baggrundsfarven baseret på feltets koordinater.
+     Hvis koordinaternes sum er et lige tal, får feltet en hvid baggrundsfarve, ellers får det en sort baggrundsfarve.
+     Derudover kan visse specifikke koordinater give feltet en lyserød baggrundsfarve.*/
 
     public SpaceView(@NotNull Space space) {
         this.space = space;
@@ -88,6 +94,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         update(space);
     }
 
+    //updatePlayer()-metoden opdaterer visningen af eventuelle spillere på feltet ved at tilføje en pil (Polygon) med spillerens farve og retning.
     private void updatePlayer() {
         this.getChildren().clear();
 
@@ -108,7 +115,8 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
 
-
+//updateView()-metoden bliver kaldt, når feltet eller tilknyttede objekter ændrer sig.
+// Den opdaterer visningen af feltet ved at tegne eventuelle vægge og opdatere spillernes visning.
     @Override
     public void updateView(Subject subject) {
         this.getChildren().clear();
@@ -126,6 +134,9 @@ public class SpaceView extends StackPane implements ViewObserver {
     /**
      * @author Ali Masoud
      */
+
+    //drawWalls()-metode, der bruges til at tegne væggene på feltet.
+    // Denne metode kaldes fra updateView() for at opdatere visningen af væggene.
     public void drawWalls() {
         Pane wallsPane = new Pane();
         Rectangle rectangle =

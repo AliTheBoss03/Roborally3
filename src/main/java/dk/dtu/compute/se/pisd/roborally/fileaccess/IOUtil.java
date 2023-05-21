@@ -8,9 +8,14 @@ import java.io.InputStream;
 /**
  * @author Amaan Ahemd, Mohammad Haashir Khan
  */
-    public class IOUtil {
 
+//IOUtil-klassen indeholder hjælpefunktioner til håndtering af input/output-operationer.
+public class IOUtil {
 
+//readString-metoden modtager en InputStream og læser indholdet som en streng.
+// Den bruger ByteSource fra Guava-biblioteket til at åbne en strøm til den modtagne InputStream.
+// Derefter bruger den asCharSource(Charsets.UTF_8) for at læse strømmen som tekst i UTF-8-kodning
+// og returnerer resultatet som en streng. Hvis der opstår en IOException, returneres en tom streng.
         public static String readString(InputStream inputStream) {
 
             ByteSource byteSource = new ByteSource() {
@@ -27,7 +32,8 @@ import java.io.InputStream;
             }
         }
 
-
+//readResource-metoden modtager en relativ ressourcesti (relativeResourcePath) og bruger ClassLoader til at hente ressourcen som en InputStream.
+// Derefter kalder den readString-metoden med den modtagne InputStream og returnerer resultatet
         public static String readResource(String relativeResourcePath) {
             ClassLoader classLoader = dk.dtu.compute.se.pisd.roborally.fileaccess.IOUtil.class.getClassLoader();
             InputStream inputStream = classLoader.getResourceAsStream(relativeResourcePath);
@@ -36,4 +42,4 @@ import java.io.InputStream;
 
     }
 
-
+//Disse hjælpefunktioner gør det nemt at læse tekstindhold fra en InputStream eller en ressourcefil i projektet.

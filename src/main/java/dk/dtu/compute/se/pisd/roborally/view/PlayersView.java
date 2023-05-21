@@ -32,14 +32,22 @@ import javafx.scene.control.TabPane;
 /**
  * @author Sofian Benomar
  */
+
+//Klassen PlayersView repræsenterer visningen af spillerne i spillet. Den viser en fane for hver spiller og viser deres aktuelle position og antallet af checkpoints, de har passeret.
 public class PlayersView extends TabPane implements ViewObserver {
 
+    //board er en reference til Board-objektet, der indeholder spillerne.
     private Board board;
 
+    //playerViews er et array af PlayerView-objekter, der repræsenterer visningerne for hver spiller.
     private PlayerView[] playerViews;
 
 
+/*I konstruktøren oprettes en fane for hver spiller i board. Hver fane er en PlayerView, der viser spillerens navn, position og antallet af checkpoints. PlayerView-objekterne tilføjes til fanevisningen (TabPane).
 
+Metoden updateView kaldes, når der sker en ændring i board-objektet. Den opdaterer visningen af spillerne baseret på den aktuelle spiller og deres positioner og checkpoints. Den aktuelle spiller markeres ved at vælge den tilhørende fane.
+
+PlayersView er en del af brugergrænsefladen og er ansvarlig for at vise spillerne og opdatere deres visninger baseret på ændringer i spillet.*/
     public PlayersView(GameController gameController) {
         board = gameController.board;
 

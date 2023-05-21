@@ -28,13 +28,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+//Klassen Space repræsenterer en plads på brættet.
 public class Space extends Subject {
 
-
+//walls er en liste af Heading-objekter, der angiver væggene omkring pladsen.
     private List<Heading> walls = new ArrayList<>();
 
+    //actions er en liste af Fieldaction-objekter, der repræsenterer de handlinger, der kan udføres på pladsen.
     private List<Fieldaction> actions = new ArrayList<>();
 
+    //board er referencen til det bræt, som pladsen tilhører.
     public final Board board;
 
     public final int x;
@@ -50,13 +53,13 @@ public class Space extends Subject {
         this.y = y;
         player = null;
     }
+    //addWall tilføjer en væg i en bestemt retning til pladsen.
     public void addWall(Heading heading) {
         if (!walls.contains(heading)) {
             walls.add(heading);
         }
     }
-
-
+    //getPlayer og setPlayer giver adgang til at læse og ændre den spiller, der befinder sig på pladsen.
     public Player getPlayer() {
         return player;
     }
@@ -76,7 +79,7 @@ public class Space extends Subject {
             notifyChange();
         }
     }
-
+    //getWalls og getActions giver adgang til at læse væggene og handlingerne for pladsen.
     public List<Heading> getWalls() {
         return walls;
     }
@@ -84,11 +87,13 @@ public class Space extends Subject {
     public List<Fieldaction> getActions() {
         return actions;
     }
+
+    //playerChanged er en metode, der bliver kaldt af spilleren for
+    // at informere pladsen om ændringer i spillerens attributter.
     void playerChanged() {
-        // This is a minor hack; since some views that are registered with the space
-        // also need to update when some player attributes change, the player can
-        // notify the space of these changes by calling this method.
+
         notifyChange();
     }
-
+//Klassen arver fra Subject, hvilket betyder, at den kan registrere
+// og underrette observere om ændringer i sine attributter.
 }

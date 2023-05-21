@@ -11,6 +11,8 @@ import java.util.List;
  * @author Ali Masoud
  */
 
+//Repository klassen implementerer IRepository interfacet og er ansvarlig for kommunikation med databasen.
+// Den indeholder metoder til at oprette, opdatere, indlæse og hente spil fra databasen.
 
 public class Repository implements IRepository {
 
@@ -58,6 +60,9 @@ public class Repository implements IRepository {
     }
 
     @Override
+    // //createGameInDB: Denne metode tager et Board objekt som argument og opretter et nyt spil i databasen.
+    //    // Metoden indsætter spillets navn, nuværende spiller, fase og trin i den tilsvarende tabel.
+    //    // Hvis oprettelsen lykkes, returneres true, ellers false.
     public boolean createGameInDB(Board game) {
         if (game.getGameId() == null) {
             Connection connection = connector.getConnection();
@@ -109,6 +114,10 @@ public class Repository implements IRepository {
     }
 
     @Override
+
+    //updateGameInDB: Denne metode tager et Board objekt som argument og opdaterer et eksisterende spil i databasen.
+    // Metoden opdaterer spillets nuværende spiller, fase og trin i den tilsvarende tabel.
+    // Hvis opdateringen lykkes, returneres true, ellers false.
     public boolean updateGameInDB(Board game) {
         assert game.getGameId() != null;
 
@@ -155,6 +164,10 @@ public class Repository implements IRepository {
      * @author Ali Masoud
      */
     @Override
+    //loadGameFromDB: Denne metode tager et spil-id som argument og indlæser det tilsvarende spil fra databasen.
+    // Metoden opretter et nyt Board objekt og indlæser spillets navn, nuværende spiller, fase og trin fra den tilsvarende tabel.
+    // Derefter indlæses spillerne og deres positioner og retninger. Hvis indlæsningen lykkes, returneres det indlæste Board objekt,
+    // ellers returneres null.
     public Board loadGameFromDB(int id) {
         Board game;
         try {
@@ -198,6 +211,8 @@ public class Repository implements IRepository {
     }
 
     @Override
+    //getGames: Denne metode returnerer en liste af GameInDB objekter, som repræsenterer alle spil i databasen.
+    // Hvert GameInDB objekt indeholder spillets id og navn
     public List<GameInDB> getGames() {
         List<GameInDB> result = new ArrayList<>();
         try {
@@ -542,3 +557,9 @@ Hvis field ikke er tom så sættes Visibile til at være true og dermed visible.
 
 
 }
+
+//Ud over disse metoder indeholder Repository klassen også en række hjælpefunktioner til at udføre databaseforespørgsler
+// og oprette PreparedStatement objekter til at udføre de specifikke SQL-forespørgsler.
+// Disse hjælpefunktioner er primært ansvarlige for at håndtere spil, spillere og kortfelter i databasen.
+//Det er vigtigt at bemærke, at Repository klassen er afhængig af en Connector objekt til at oprette og vedligeholde forbindelsen til databasen.
+// Dette er implementeret ved hjælp af en konstruktør, der tager en Connector som argument og gemmer den som en instansvariabel.

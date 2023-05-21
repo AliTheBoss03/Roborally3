@@ -27,12 +27,17 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 
 
+//Klassen RoboRallyMenuBar repræsenterer menulinjen i RoboRally-applikationen.
+// Den indeholder menuen "File" med forskellige menuindgange til styring af spillet og applikationen
 public class RoboRallyMenuBar extends MenuBar {
 
+//appController er en reference til AppController-objektet, der styrer applikationen.
     private AppController appController;
 
+    //controlMenu er en Menu-objekt, der repræsenterer menuen "File"
     private Menu controlMenu;
 
+    //saveGame, newGame, loadGame, stopGame og exitApp er MenuItem-objekter, der repræsenterer de forskellige menuindgange.
     private MenuItem saveGame;
 
     private MenuItem newGame;
@@ -73,7 +78,9 @@ public class RoboRallyMenuBar extends MenuBar {
         controlMenu.setOnShown(e -> this.updateBounds());
         update();
     }
-
+//update()-metoden opdaterer synligheden af menuindgangene baseret på tilstanden af spillet.
+// Hvis spillet kører, er kun menuindgangene "Stop Game" og "Save Game" synlige,
+// mens "New Game" og "Load Game" er usynlige. Hvis spillet ikke kører, er det modsatte tilfældet.
     public void update() {
         if (appController.isGameRunning()) {
             newGame.setVisible(false);
@@ -89,3 +96,5 @@ public class RoboRallyMenuBar extends MenuBar {
     }
 
 }
+//RoboRallyMenuBar er en del af brugergrænsefladen og er ansvarlig for at vise menulinjen og tilknytte handlinger til menuindgangene.
+// Den opdaterer også synligheden af menuindgangene baseret på spillets tilstand.

@@ -40,8 +40,13 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class AppController implements Observer {
+/*appcontrolleren er tilknyttet  applikation, som er Roboally
 
+Denne klasse er AppController, som tilsyneladende håndterer hovedstyringen af RoboRally-applikationen.
+Den implementerer Observer-interfacet, hvilket betyder,
+ at den er designet til at reagere på opdateringer fra andre dele af applikationen.*/
+public class AppController implements Observer {
+//final er konstnter der ikk ændres
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
 
     final private List<String> BOARD_OPTIONS = Arrays.asList("Board 1","Board 2");
@@ -51,7 +56,7 @@ public class AppController implements Observer {
 
 
     final private RoboRally roboRally;
-
+//gamecontrolleren viser om der er et spil startet eller ikke. hvis den er null er der ikk et spil startet
     private GameController gameController;
 
 
@@ -62,7 +67,11 @@ public class AppController implements Observer {
      * @author Ali Masoud
      * @author Amaan Ahmed
      */
-
+/* her fortæller den hvor mange spiller der skal være.
+    Denne metode bruges til at starte et nyt spil.
+    Den viser brugerne valgmulighederne for antallet af spillere og bordvalget. Derefter opretter den et nyt GameController objekt og tilføjer de valgte antal spillere til spillet, hver med deres egen farve og navn.
+     Derefter starter den programmeringsfasen af spillet og opretter brætvisningen.
+     */
     public void newGame() {
         ChoiceDialog<Integer> dialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
         dialog.setTitle("Player number");
@@ -117,24 +126,17 @@ public class AppController implements Observer {
     /**
      * @author Ali Masoud
      */
+
+    // Denne metode gemmer det aktuelle spil til databasen via et objekt af IRepository typen.
     public void saveGame() {
         IRepository repo = RepositoryAccess.getRepository();
         repo.createGameInDB(gameController.board);
     }
 /*
-Metoden loadGame startes ud med et if statement der tjekker om der er et gameboard i gang, og dermed udføres koden ikke medmindre der ikke er en gameboard ignag
-Der oprettes et IRepository som forrige metode for at kunne hente metoden loadGameFromDB og metoden getGames
-Der oprettes en liste med typen GameInDB og den repository bruges til at kalde metoden getGames som returnerer alle de gemte spil
-I den næste linje oprettes en Choice dialog som er et valgs vindue som popper op når der bliver trykket på loadgame, i den tages udgangspunkt i gameList som er den liste med de gemte games
-Der sættes en titel for valgs vinduet og dermed også en overskrift
-Resultaterne bliver fremvist og der ventes på et valg fra brugeren
-Nedenunder bliver en if-statement udført hvis der er valgt et valg ved brug af isPresent som returnerer en boolean
-ind i if statement oprettes et board med metoden loadGameFromDB som tager en id på det valgte board
-nedenunder oprettes et gamecontroller med den board er blevet loadet i linjen over
-Og i sidste linje optrettes spillets view med den oprettede gamecontroller i linjen over.
- */
-    /**
-     * @author Ali Masoud
+loadGame: Denne metode henter en liste over spil fra databasen og viser brugeren en dialog,
+der giver dem mulighed for at vælge, hvilket spil de vil indlæse.
+Hvis brugeren vælger et spil, henter det spillet fra databasen, opretter et nyt GameController objekt,
+og opretter brætvisningen.
      */
     public void loadGame() {
         if ( gameController == null) {
@@ -153,7 +155,8 @@ Og i sidste linje optrettes spillets view med den oprettede gamecontroller i lin
         }
     }
 
-
+//stopGame: Denne metode gemmer det aktuelle spil og sætter gameController til null, hvilket i praksis stopper spillet.
+// Den opretter derefter brætvisningen med null, hvilket sikkert fjerner brætvisningen.
     public boolean stopGame() {
         if (gameController != null) {
 
@@ -166,7 +169,9 @@ Og i sidste linje optrettes spillets view med den oprettede gamecontroller i lin
         }
         return false;
     }
-
+//exit: Denne metode håndterer afslutningen af applikationen.
+// Den viser en dialogboks, der spørger brugeren, om de er sikre på, at de vil afslutte RoboRally.
+// Hvis brugeren bekræfter, at de vil afslutte, eller hvis der ikke er noget igangværende spil, afslutter den applikationen.
     public void exit() {
         if (gameController != null) {
             Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -185,12 +190,16 @@ Og i sidste linje optrettes spillets view med den oprettede gamecontroller i lin
             Platform.exit();
         }
     }
-
+//isGameRunning: Denne metode returnerer en boolean, der angiver, om der i øjeblikket er et spil i gang.
+// Hvis gameController ikke er null, betyder det, at der er et spil i gang.
     public boolean isGameRunning() {
         return gameController != null;
     }
 
-
+///update: Da denne klasse implementerer Observer interfacet, er der en update metode, som skal implementeres.
+// Denne metode kaldes, når objektet, som denne klasse observerer
+// (dvs. et objekt af en klasse, der implementerer Subject interfacet), opdateres.
+// I dette tilfælde ser det ud til, at denne metode endnu ikke er implementeret.
     @Override
     public void update(Subject subject) {
 

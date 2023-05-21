@@ -50,7 +50,6 @@ class GameControllerTest {
 
 
 
-
     @Test
     void moveCurrentPlayerToSpace() {
         Board board = gameController.board;

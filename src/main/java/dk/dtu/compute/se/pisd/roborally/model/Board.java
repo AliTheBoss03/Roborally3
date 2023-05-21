@@ -30,12 +30,14 @@ import java.util.List;
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 
 
+//Board-klassen repræsenterer spillebrættet i spillet.
+// Den udvider Subject-klassen, hvilket gør den til en observerbar komponent.
 public class Board extends Subject {
 
-
+//width og height er de dimensioner, der definerer størrelsen af spillebrættet.
     public final int width;
 
-
+//finaleCheckpoint er variablen, der holder styr på det endelige checkpoint-nummer på brættet.
     public int  finaleCheckpoint;
 
     public final int height;
@@ -44,16 +46,22 @@ public class Board extends Subject {
 
     private Integer gameId;
 
+    //spaces er en todimensionel array af Space-objekter, der repræsenterer rummene på spillebrættet.
     private final Space[][] spaces;
 
+    //players er en liste af spillere, der er tilknyttet spillebrættet.
     private final List<Player> players = new ArrayList<>();
 
+    //current er en reference til den aktuelle spiller på brættet.
     private Player current;
 
+    //phase er den aktuelle fase i spillet.
     private Phase phase = INITIALISATION;
 
+    //step er det aktuelle trin i spillet.
     private int step = 0;
 
+    //stepMode angiver, om spillet kører i trinvis tilstand eller ej.
     private boolean stepMode;
 
     /*Her oprettes en Board klasse med tre inputparametre - bredden, højden og navnet på brættet.

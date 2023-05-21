@@ -30,6 +30,18 @@ package dk.dtu.compute.se.pisd.roborally;
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  */
+
+/*
+StartRoboRally-klassen er en simpel klasse med en main()-metode,
+ der fungerer som indgangspunkt for RoboRally-applikationen.
+ Denne klasse bruger RoboRally.main(args) til at starte RoboRally-applikationen ved at kalde main()-metoden
+ i RoboRally-klassen.
+Formålet med StartRoboRally-klassen er at give en separat indgangspunkt,
+som kan bruges til at starte RoboRally-applikationen uden at skulle kalde launch() direkte i en main()-metode.
+ Dette kan være nyttigt, hvis der er brug for at tilføje yderligere initialisering eller konfiguration før starten af
+  hovedapplikationen.
+I dette tilfælde er StartRoboRally-klassen en simpel mellemmand, der kalder RoboRally.main(args)
+ for at starte applikationen.*/
 public class StartRoboRally {
 
     public static void main(String[] args) {RoboRally.main(args);

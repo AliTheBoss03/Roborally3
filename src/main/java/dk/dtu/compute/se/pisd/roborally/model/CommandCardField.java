@@ -29,18 +29,22 @@ public class CommandCardField extends Subject {
 
     private CommandCard card;
 
+    //visible: En boolsk værdi, der angiver om kortet er synligt eller ej.
     private boolean visible;
 
+    //Konstruktøren tager imod en reference til en spiller og tildeler den til player-variablen.
+    // Kortet (card) initialiseres som null, og visible sættes som true.
     public CommandCardField(Player player) {
         this.player = player;
         this. card = null;
         this.visible = true;
     }
-
+//getCard(): Returnerer kommandokortet (card) på feltet.
     public CommandCard getCard() {
         return card;
     }
 
+    //setCard(CommandCard card): Tildeler et nyt kommandokort til feltet og notifierer ændringer
     public void setCard(CommandCard card) {
         if (card != this.card) {
             this.card = card;
@@ -48,10 +52,12 @@ public class CommandCardField extends Subject {
         }
     }
 
+    //isVisible(): Returnerer en boolsk værdi, der angiver om kortet er synligt eller ej.
     public boolean isVisible() {
         return visible;
     }
 
+    //setVisible(boolean visible): Sætter synligheden af kortet og notifierer ændringer.
     public void setVisible(boolean visible) {
         if (visible != this.visible) {
             this.visible = visible;

@@ -31,6 +31,15 @@ import javafx.application.Platform;
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */
+/*ViewObserver er et interface, der udvider Observer-interfacet og definerer en metode updateView(Subject subject),
+ som er ansvarlig for at opdatere visningen baseret på ændringer i det observerede emne (subject).
+ Dette interface bruges typisk af klasser, der fungerer som observatører i et observer-designmønster
+ og er ansvarlige for at opdatere brugergrænsefladen eller visningen af en applikation.
+ViewObserver har også en standardimplementering af update(Subject subject)-metoden, der sikrer,
+ at opdateringen af visningen kun udføres på FX-applikationstråden (JavaFX-tråden).
+ Hvis update()-metoden kaldes på en anden tråd, bruger den Platform.runLater() til at planlægge
+  opdateringen af visningen på FX-applikationstråden.
+  Dette sikrer, at GUI-opdateringer udføres sikkert og korrekt i JavaFX-applikationer.*/
 public interface ViewObserver extends Observer {
 
     void updateView(Subject subject);

@@ -21,8 +21,16 @@
  */
 package dk.dtu.compute.se.pisd.roborally.model;
 
-
+//Phase er en enum-klasse, der repræsenterer forskellige faser eller stadier af spillet. De definerede faser er:
+//INITIALISATION: Fasen hvor spillet bliver initialiseret eller opsat.
+//PROGRAMMING: Fasen hvor spillerne planlægger og programmerer deres robotter.
+//ACTIVATION: Fasen hvor robotterne udfører deres programmerede handlinger.
+//PLAYER_INTERACTION: Fasen hvor der er interaktion mellem spillerne, f.eks. handel eller kommunikation.
+//SETUP: Fasen hvor spillet bliver sat op, f.eks. opsætning af brættet eller placering af objekter.
+//END_OF_GAME: Fasen hvor spillet er afsluttet eller ved at afslutte.
 public enum Phase {
     INITIALISATION, PROGRAMMING, ACTIVATION, PLAYER_INTERACTION, SETUP, END_OF_GAME
 
 }
+//Disse faser beskriver de forskellige stadier, som spillet kan være i,
+// og kan bruges til at styre spillogikken eller informere spillere om, hvilken fase spillet befinder sig i.

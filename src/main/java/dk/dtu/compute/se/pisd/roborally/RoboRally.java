@@ -37,10 +37,14 @@ import javafx.stage.Stage;
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */
+//RoboRally-klassen er hovedklassen i RoboRally-applikationen og udvider Application-klassen fra JavaFX.
+// Denne klasse er ansvarlig for at starte og initialisere JavaFX-applikationen,
+// oprette vinduet og håndtere visningen af spillebrættet
 public class RoboRally extends Application {
 
     private static final int MIN_APP_WIDTH = 600;
 
+//Den opretter en Stage-instans til at repræsentere hovedvinduet i applikationen.
     private Stage stage;
     private BorderPane boardRoot;
     // private RoboRallyMenuBar menuBar;

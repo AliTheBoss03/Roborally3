@@ -25,6 +25,9 @@ import dk.dtu.compute.se.pisd.roborally.model.*;
 import org.jetbrains.annotations.NotNull;
 
 
+
+
+//Dette er GameController klassen. Den er ansvarlig for at håndtere spillets logik og aktioner, der skal ske på brættet
 public class GameController {
 
     final public Board board;
@@ -33,13 +36,8 @@ public class GameController {
         this.board = board;
     }
 
-    /*
-    Denne metode tager udgangspunkt i den nuværende spiller og flytter spilleren til den valgte space hvis den er ledig
-    Metoden sætter også movecounter op hver gang spilleren bevæges.
-     */
-    /**
-     * @author Ali Masoud
-     */
+   //Denne metode forsøger at flytte den nuværende spiller til en bestemt rum (Space), hvis den er ledig.
+   // Desuden skifter den nuværende spiller til den næste spiller.
     public void moveCurrentPlayerToSpace(@NotNull Space space)  {
         if (space.getPlayer() == null) {
             Player currentplayer = board.getCurrentPlayer();
@@ -62,9 +60,8 @@ public class GameController {
     }
 
 
-    /**
-     * @author Ali Masoud
-     */
+//startProgrammingPhase: Denne metode starter programmeringsfasen af spillet.
+// Den rydder alle spillerens programfelter og genererer nye kommandokort for spillerne.
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
@@ -86,18 +83,15 @@ public class GameController {
             }
         }
     }
-    /**
-     * @author Ali Masoud
-     */
+  //generateRandomCommandCard: Genererer et tilfældigt kommandokort.
     private CommandCard generateRandomCommandCard() {
         Command[] commands = Command.values();
         int random = (int) (Math.random() * commands.length);
         return new CommandCard(commands[random]);
     }
 
-    /**
-     * @author Ali Masoud
-     */
+   //finishProgrammingPhase:
+   // Slutter programmeringsfasen og forbereder til aktiveringsfasen, hvor robotternes kommandoer udføres.
     public void finishProgrammingPhase() {
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
@@ -106,9 +100,7 @@ public class GameController {
         board.setStep(0);
     }
 
-    /**
-     * @author Ali Masoud
-     */
+  //makeProgramFieldsVisible: Gør et bestemt register (programfelt) synligt for alle spillere.
     private void makeProgramFieldsVisible(int register) {
         if (register >= 0 && register < Player.NO_REGISTERS) {
             for (int i = 0; i < board.getPlayersNumber(); i++) {
@@ -119,9 +111,7 @@ public class GameController {
         }
     }
 
-    /**
-     * @author Ali Masoud
-     */
+ //makeProgramFieldsInvisible: Gør alle spillernes programfelter usynlige.
     private void makeProgramFieldsInvisible() {
         for (int i = 0; i < board.getPlayersNumber(); i++) {
             Player player = board.getPlayer(i);
@@ -132,34 +122,26 @@ public class GameController {
         }
     }
 
-    /**
-     * @author Ali Masoud
-     */
+    //executePrograms: Udfører alle spillernes programmerede kommandoer.
     public void executePrograms() {
         board.setStepMode(false);
         continuePrograms();
     }
 
-    /**
-     * @author Ali Masoud
-     */
+   //executeStep: Udfører et trin i alle spillernes programmerede kommandoer.
     public void executeStep() {
         board.setStepMode(true);
         continuePrograms();
     }
 
-    /**
-     * @author Ali Masoud
-     */
+    //continuePrograms: Fortsætter med at udføre programmerede kommandoer.
     private void continuePrograms() {
         do {
             executeNextStep();
         } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
     }
 
-    /**
-     * @author Ali Masoud
-     */
+  //executeNextStep: Udfører det næste trin i det aktuelle spillers program.
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
@@ -226,6 +208,7 @@ public class GameController {
     /**
      * @author Ali Masoud
      */
+    //executeCommandOptionAndContinue: Udfører en kommando og fortsætter med det næste trin i programmet.
     public void executeCommandOptionAndContinue(Command option){
         executeCommand(board.getCurrentPlayer(), option);
         board.setPhase(Phase.ACTIVATION);
@@ -269,6 +252,8 @@ For eksempel hvis det er FORWARD command kaldes metoden moveForward.
     /**
      * @author Ali Masoud
      */
+    //executeCommand: Udfører en given kommando for en spiller.
+    // Kommandoerne kan være FORWARD, RIGHT, LEFT og FAST_FORWARD.
     private void executeCommand(@NotNull Player player, Command command) {
         if (player != null && player.board == board && command != null) {
 
@@ -298,9 +283,7 @@ For eksempel hvis det er FORWARD command kaldes metoden moveForward.
    Der oprettes et felt som finder det felt der er ved siden af spillers felt og samme retning på spilleren
    Hvis det felt ikke er tom så skal den flytte den nuværende spiller til den givne felt som er target og spillers heading
      */
-    /**
-     * @author Ali Masoud
-     */
+   //moveForward: Flytter en spiller et skridt fremad i den retning, de står i.
     public void moveForward(@NotNull Player player) {
         if (player.board == board) {
             Space space = player.getSpace();
@@ -315,9 +298,7 @@ For eksempel hvis det er FORWARD command kaldes metoden moveForward.
             }
         }
     }
-    /**
-     * @author Ali Masoud
-     */
+   //moveToSpace: Flytter en spiller til et givet felt, hvis det er muligt.
 
     void moveToSpace(@NotNull Player player, @NotNull Space space, @NotNull Heading heading) throws ImpossibleMoveException {
         assert board.getNeighbour(player.getSpace(), heading) == space; // make sure the move to here is possible in principle

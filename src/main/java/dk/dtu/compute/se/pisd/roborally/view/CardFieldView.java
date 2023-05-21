@@ -38,6 +38,8 @@ import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
 
 
+
+// repræsenterer visningen af et kortfelt, der indeholder et enkelt kort (kommandokort eller programfelt) i spillet.
 public class CardFieldView extends GridPane implements ViewObserver {
 
     // This data format helps avoiding transfers of e.g. Strings from other
@@ -56,12 +58,23 @@ public class CardFieldView extends GridPane implements ViewObserver {
     final public static Background BG_ACTIVE = new Background(new BackgroundFill(Color.YELLOW, null, null));
     final public static Background BG_DONE = new Background(new BackgroundFill(Color.GREENYELLOW,  null, null));
 
+    //field er referencen til det tilknyttede CommandCardField-objekt.
     private CommandCardField field;
 
+    //label er en Label, der viser navnet på det kort, der er tilknyttet field.
     private Label label;
-
+//gameController er en reference til GameController, der styrer spillet.
     private GameController gameController;
 
+
+
+    /*I konstruktøren opsættes visningen af kortfeltet. Det bliver en GridPane, og forskellige visuelle egenskaber som størrelse, baggrund og ramme bliver angivet. label oprettes for at vise kortnavnet. Der bliver også knyttet begivenhedshåndterere til kortfeltet for at håndtere træk-og-slip-operationer og ændringer i visningen.
+
+Metoden updateView kaldes, når der sker en ændring i field-objektet. Den opdaterer kortets navn på label baseret på det aktuelle kort i field.
+
+De indre klasser OnDragDetectedHandler, OnDragOverHandler, OnDragEnteredHandler, OnDragExitedHandler, OnDragDroppedHandler og OnDragDoneHandler er begivenhedshåndterere, der håndterer forskellige faser af træk-og-slip-operationer for kortfeltet. De styrer, hvordan kortet kan trækkes, hvor det kan slippe, og hvordan kortfeltets visuelle tilstand skal ændres under processen.
+
+CardFieldView er en del af brugergrænsefladen og er ansvarlig for at vise et enkelt kortfelt og håndtere interaktioner med kortet.*/
     public CardFieldView(@NotNull GameController gameController, @NotNull CommandCardField field) {
         this.gameController = gameController;
         this.field = field;

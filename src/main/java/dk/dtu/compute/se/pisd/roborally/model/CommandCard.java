@@ -25,14 +25,16 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import org.jetbrains.annotations.NotNull;
 
 
+//CommandCard-klassen repræsenterer et kommandokort i spillet.
 public class CommandCard extends Subject {
-
+//command: En konstant af typen Command, der angiver kommandoen på kortet.
     final public Command command;
-
+//CommandCard(Command command): Konstruktøren tager imod en kommando og tildeler den til command-variablen.
     public CommandCard(@NotNull Command command) {
         this.command = command;
     }
 
+    //getName(): Returnerer navnet på kommandoen, som er hentet fra displayName-variablen i Command-enumen.
     public String getName() {
         return command.displayName;
     }

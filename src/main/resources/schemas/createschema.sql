@@ -47,3 +47,26 @@ CREATE TABLE IF NOT EXISTS CardField (
         ON DELETE CASCADE
         ON UPDATE CASCADE
     )
+/*Dette er et SQL-skript, der definerer tabellerne i en database og deres relationer. Skriptet opretter to tabeller: Game og Player.
+
+    Tabellen Game indeholder følgende kolonner:
+
+    gameID: Unik identifikator for spillet (auto increment)
+    name: Navnet på spillet
+    phase: Fasen af spillet
+    step: Trin inden for fasen
+    currentPlayer: ID for den aktuelle spiller (kan være null)
+    Tabellen Player indeholder følgende kolonner:
+
+    gameID: ID for spillet, som spilleren tilhører
+    playerID: Unik identifikator for spilleren inden for spillet
+    name: Navnet på spilleren
+    colour: Farven for spilleren
+    positionX: X-koordinat for spillerens position
+    positionY: Y-koordinat for spillerens position
+    heading: Retningen, som spilleren vender (enum eller numerisk værdi)
+    Derudover er der oprettet en tabel CardField, som ikke er inkluderet i det viste skærmbillede.
+
+    Der er også defineret fremmednøglebegrænsninger (foreign key constraints), der forbinder tabellerne og sikrer dataintegritet. De sikrer, at gameID i Player refererer til gameID i Game-tabellen, og at gameID og playerID i CardField refererer til gameID og playerID i Player-tabellen.
+
+    Til sidst er der to linjer, der midlertidigt deaktiverer og aktiverer kontrol af fremmednøglebegrænsninger.*/

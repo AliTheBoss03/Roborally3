@@ -24,14 +24,21 @@ package dk.dtu.compute.se.pisd.roborally.fileaccess.model;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//BoardTemplate-klassen repræsenterer skabelonen for et spillebræt.
+// Den indeholder bredde og højde for brættet og en liste af SpaceTemplate-objekter,
+// der repræsenterer de individuelle rum på brættet.
 public class BoardTemplate {
 
+    //Attributterne width og height angiver henholdsvis bredden og højden på brættet.
     public int width;
     public int height;
-
+//Attributten spaces er en liste, der indeholder SpaceTemplate-objekter.
+// Hvert SpaceTemplate-objekt repræsenterer et enkelt rum på brættet og beskriver egenskaberne for det pågældende rum.
     public List<SpaceTemplate> spaces = new ArrayList<>();
-
+//Denne klasse bruges sandsynligvis til at definere og gemme oplysninger om et bræt,
+// der kan bruges til at oprette en faktisk Board-instans i spillet.
+// BoardTemplate fungerer som en skabelon eller en plan for, hvordan brættet skal se ud,
+// og indeholder de nødvendige oplysninger til at oprette brættet i spillet.
 
 
 }
