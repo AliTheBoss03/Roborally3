@@ -21,25 +21,21 @@
  */
 package dk.dtu.compute.se.pisd.roborally.model;
 
-
-
-//Heading er en enum-klasse, der repræsenterer mulige retninger eller hovedpunkter.
-// De definerede retninger er: SOUTH, WEST, NORTH og EAST.
-
+/**
+ * ...
+ *
+ * @author Ekkart Kindler, ekki@dtu.dk
+ *
+ */
 public enum Heading {
 
     SOUTH, WEST, NORTH, EAST;
 
-   //next(): Returnerer den næste retning i rækkefølgen af retninger.
-   // Hvis den aktuelle retning er EAST, vil næste retning være SOUTH.
     public Heading next() {
         return values()[(this.ordinal() + 1) % values().length];
     }
-//prev(): Returnerer den foregående retning i rækkefølgen af retninger.
-// Hvis den aktuelle retning er EAST, vil den foregående retning være NORTH.
+
     public Heading prev() {
         return values()[(this.ordinal() + values().length - 1) % values().length];
     }
 }
-//Disse metoder gør det muligt at skifte til den næste eller foregående retning i en sekvens af retninger
-// uden at skulle arbejde direkte med rækkefølgen af retninger.

@@ -25,41 +25,53 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-
+/**
+ * ...
+ *
+ * @author Ekkart Kindler, ekki@dtu.dk
+ * @author
+ *
+ */
 public enum Command {
 
     // This is a very simplistic way of realizing different commands.
 
-    FORWARD("Fwd"),
+    FORWARD("Move one"),
     RIGHT("Turn Right"),
     LEFT("Turn Left"),
-    FAST_FORWARD("Fast Fwd"),
+
+    Move2("Move two"),
+
+    Uturn("U turn"),
+    Moveback("Move back"),
+    FAST_FORWARD("Move three"),
 
     // XXX Assignment V3 (step 1)
     OPTION_LEFT_RIGHT("Left OR Right", LEFT, RIGHT);
 
-
-    //displayName: En tekststreng, der viser kommandoens navn.
     final public String displayName;
 
-    //options: En liste af andre kommandoer, der er tilgængelige som valgmuligheder for denne kommando.
-    // Listen er uforanderlig og oprettet ved hjælp af Collections.unmodifiableList.
+    // XXX Assignment V3 (step 1)
+    // Command(String displayName) {
+    //     this.displayName = displayName;
+    // }
+    //
+    // replaced by the code below:
+
     final private List<Command> options;
 
-    // Konstruktøren tager imod et navn og en valgfri liste af kommandoer som valgmuligheder.
-    // Denne liste af kommandoer bruges kun i OPTION_LEFT_RIGHT-kommandoen. displayName og options-listen tildeles de angivne værdier.
     Command(String displayName, Command... options) {
         this.displayName = displayName;
         this.options = Collections.unmodifiableList(Arrays.asList(options));
     }
-//isInteractive(): Returnerer true, hvis kommandoen har valgmuligheder, ellers returnerer den false.
+
     public boolean isInteractive() {
         return !options.isEmpty();
     }
 
-//getOptions(): Returnerer listen af valgmuligheder for kommandoen.
     public List<Command> getOptions() {
         return options;
     }
 
 }
+

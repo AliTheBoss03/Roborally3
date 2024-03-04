@@ -21,11 +21,13 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+import com.mysql.cj.conf.ConnectionUrl;
+import com.sun.jdi.connect.Transport;
+import com.sun.jdi.connect.spi.Connection;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Observer;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
 import dk.dtu.compute.se.pisd.roborally.dal.*;
-import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import javafx.application.Platform;
@@ -37,107 +39,69 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-
-/*appcontrolleren er tilknyttet  applikation, som er Roboally
-
-Denne klasse er AppController, som tilsyneladende håndterer hovedstyringen af RoboRally-applikationen.
-Den implementerer Observer-interfacet, hvilket betyder,
- at den er designet til at reagere på opdateringer fra andre dele af applikationen.*/
+/**
+ * ...
+ *
+ * @author Ekkart Kindler, ekki@dtu.dk
+ *
+ */
 public class AppController implements Observer {
-//final er konstnter der ikk ændres
+
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
-
-    final private List<String> BOARD_OPTIONS = Arrays.asList("Board 1","Board 2");
-
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
 
-
-
     final private RoboRally roboRally;
-//gamecontrolleren viser om der er et spil startet eller ikke. hvis den er null er der ikk et spil startet
+
     private GameController gameController;
 
 
     public AppController(@NotNull RoboRally roboRally) {
         this.roboRally = roboRally;
     }
-    /**
-     * @author Ali Masoud
-     * @author Amaan Ahmed
-     */
-/* her fortæller den hvor mange spiller der skal være.
-    Denne metode bruges til at starte et nyt spil.
-    Den viser brugerne valgmulighederne for antallet af spillere og bordvalget. Derefter opretter den et nyt GameController objekt og tilføjer de valgte antal spillere til spillet, hver med deres egen farve og navn.
-     Derefter starter den programmeringsfasen af spillet og opretter brætvisningen.
-     */
+
     public void newGame() {
         ChoiceDialog<Integer> dialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
         dialog.setTitle("Player number");
         dialog.setHeaderText("Select number of players");
         Optional<Integer> result = dialog.showAndWait();
 
-        ChoiceDialog<String> dialog2 = new ChoiceDialog<>(BOARD_OPTIONS.get(0), BOARD_OPTIONS);
-        dialog2.setTitle("Choice of board");
-        dialog2.setHeaderText("Select board");
-        Optional<String> result2 = dialog2.showAndWait();
-
-        String boardResult= String.valueOf(result2);
-
-
         if (result.isPresent()) {
             if (gameController != null) {
-
+                // The UI should not allow this, but in case this happens anyway.
+                // give the user the option to save the game or abort this operation!
                 if (!stopGame()) {
                     return;
                 }
             }
 
-
-            Board board = LoadBoard.loadBoard(boardResult);
-            System.out.println(boardResult);
-
-
-
-
-
+            // XXX the board should eventually be created programmatically or loaded from a file
+            //     here we just create an empty board with the required number of players.
+            Board board = new Board(8,5);
             gameController = new GameController(board);
             int no = result.get();
             for (int i = 0; i < no; i++) {
                 Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
                 board.addPlayer(player);
                 player.setSpace(board.getSpace(i % board.width, i));
-
-
-// Json fil 2
             }
+
+
+            // XXX: V2
+            // board.setCurrentPlayer(board.getPlayer(0));
             gameController.startProgrammingPhase();
 
             roboRally.createBoardView(gameController);
         }
     }
 
-    /*
-     * Metoden savegame bruges som et knap ind i spillet til at oprette spillet ind i databasen og dermed gemmes spillet i databasen så den kan loades senere
-     * I metoden oprettes et IRepository som bruges til at kunne kalde metoden createGameInDB
-     * Ind i metoden tages udgangspunkt i den gameboard som spillet foregår på
-     */
-    /**
-     * @author Ali Masoud
-     */
-
-    // Denne metode gemmer det aktuelle spil til databasen via et objekt af IRepository typen.
     public void saveGame() {
         IRepository repo = RepositoryAccess.getRepository();
         repo.createGameInDB(gameController.board);
     }
-/*
-loadGame: Denne metode henter en liste over spil fra databasen og viser brugeren en dialog,
-der giver dem mulighed for at vælge, hvilket spil de vil indlæse.
-Hvis brugeren vælger et spil, henter det spillet fra databasen, opretter et nyt GameController objekt,
-og opretter brætvisningen.
-     */
+
     public void loadGame() {
         if ( gameController == null) {
             IRepository repo = RepositoryAccess.getRepository();
@@ -155,8 +119,15 @@ og opretter brætvisningen.
         }
     }
 
-//stopGame: Denne metode gemmer det aktuelle spil og sætter gameController til null, hvilket i praksis stopper spillet.
-// Den opretter derefter brætvisningen med null, hvilket sikkert fjerner brætvisningen.
+    /**
+     * Stop playing the current game, giving the user the option to save
+     * the game or to cancel stopping the game. The method returns true
+     * if the game was successfully stopped (with or without saving the
+     * game); returns false, if the current game was not stopped. In case
+     * there is no current game, false is returned.
+     *
+     * @return true if the current game was stopped, false otherwise
+     */
     public boolean stopGame() {
         if (gameController != null) {
 
@@ -169,9 +140,7 @@ og opretter brætvisningen.
         }
         return false;
     }
-//exit: Denne metode håndterer afslutningen af applikationen.
-// Den viser en dialogboks, der spørger brugeren, om de er sikre på, at de vil afslutte RoboRally.
-// Hvis brugeren bekræfter, at de vil afslutte, eller hvis der ikke er noget igangværende spil, afslutter den applikationen.
+
     public void exit() {
         if (gameController != null) {
             Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -190,19 +159,15 @@ og opretter brætvisningen.
             Platform.exit();
         }
     }
-//isGameRunning: Denne metode returnerer en boolean, der angiver, om der i øjeblikket er et spil i gang.
-// Hvis gameController ikke er null, betyder det, at der er et spil i gang.
+
     public boolean isGameRunning() {
         return gameController != null;
     }
 
-///update: Da denne klasse implementerer Observer interfacet, er der en update metode, som skal implementeres.
-// Denne metode kaldes, når objektet, som denne klasse observerer
-// (dvs. et objekt af en klasse, der implementerer Subject interfacet), opdateres.
-// I dette tilfælde ser det ud til, at denne metode endnu ikke er implementeret.
+
     @Override
     public void update(Subject subject) {
-
+        // XXX do nothing for now
     }
 
 }

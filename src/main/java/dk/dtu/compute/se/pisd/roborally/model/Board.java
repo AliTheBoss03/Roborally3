@@ -29,16 +29,15 @@ import java.util.List;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 
-
-//Board-klassen repræsenterer spillebrættet i spillet.
-// Den udvider Subject-klassen, hvilket gør den til en observerbar komponent.
+/**
+ * ...
+ *
+ * @author Ekkart Kindler, ekki@dtu.dk
+ *
+ */
 public class Board extends Subject {
 
-//width og height er de dimensioner, der definerer størrelsen af spillebrættet.
     public final int width;
-
-//finaleCheckpoint er variablen, der holder styr på det endelige checkpoint-nummer på brættet.
-    public int  finaleCheckpoint;
 
     public final int height;
 
@@ -46,55 +45,39 @@ public class Board extends Subject {
 
     private Integer gameId;
 
-    //spaces er en todimensionel array af Space-objekter, der repræsenterer rummene på spillebrættet.
     private final Space[][] spaces;
 
-    //players er en liste af spillere, der er tilknyttet spillebrættet.
     private final List<Player> players = new ArrayList<>();
 
-    //current er en reference til den aktuelle spiller på brættet.
     private Player current;
 
-    //phase er den aktuelle fase i spillet.
     private Phase phase = INITIALISATION;
 
-    //step er det aktuelle trin i spillet.
     private int step = 0;
 
-    //stepMode angiver, om spillet kører i trinvis tilstand eller ej.
     private boolean stepMode;
 
-    /*Her oprettes en Board klasse med tre inputparametre - bredden, højden og navnet på brættet.
-     Derefter oprettes variablerne boardName, width, height og spaces.
-     spaces er et to dimensionelt array af Space objekter med størrelsen width x height.*/
-     public Board(int width, int height, @NotNull String boardName) {
+    public Board(int width, int height, @NotNull String boardName) {
         this.boardName = boardName;
         this.width = width;
         this.height = height;
         spaces = new Space[width][height];
-
-
-        /*Her oprettes Space objekter i hver celle i spaces-arrayet, og der sættes en South væg på alle cellerne.
-         Hvis x er 4 og y er 1, oprettes et Checkpoint objekt og sættes i denne celle.
-         Hver Space objekt oprettes med den aktuelle Board instans, x og y koordinaterne som inputparametre.*/
         for (int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
                 Space space = new Space(this, x, y);
                 spaces[x][y] = space;
-                if(x == 4 && y == 1)
-                    space = new Checkpoint(this,x,y);
-                {
+                if(x == 4 && y == 1) {
                     space.getWalls().add(Heading.SOUTH);
-
+                    space = new Checkpoint(this,x,y,1);
                 }
             }
         }
-//Her sættes stepMode variablen til false.
+
         this.stepMode = false;
     }
 
     public Board(int width, int height) {
-        this(width, height, "defaultboard" +"defaultboard2");
+        this(width, height, "defaultboard");
     }
 
     public Integer getGameId() {
@@ -191,7 +174,7 @@ public class Board extends Subject {
         }
     }
 
-    /*
+    /**
      * Returns the neighbour of the given space of the board in the given heading.
      * The neighbour is returned only, if it can be reached from the given space
      * (no walls or obstacles in either of the involved spaces); otherwise,
@@ -202,7 +185,9 @@ public class Board extends Subject {
      * @return the space in the given direction; null if there is no (reachable) neighbour
      */
     public Space getNeighbour(@NotNull Space space, @NotNull Heading heading) {
-
+        if (space.getWalls().contains(heading))  {
+            return null;
+        }
         int x = space.x;
         int y = space.y;
         switch (heading) {
@@ -219,13 +204,26 @@ public class Board extends Subject {
                 x = (x + 1) % width;
                 break;
         }
+        Heading reverse = Heading.values()[(heading.ordinal() + 2)% Heading.values().length];
+        Space result = getSpace(x, y);
+        if (result != null) {
+            if (result.getWalls().contains(reverse)) {
+                return null;
+            }
+        }
 
         return getSpace(x, y);
     }
 
     public String getStatusMessage() {
+        // this is actually a view aspect, but for making assignment V1 easy for
+        // the students, this method gives a string representation of the current
+        // status of the game
+
+        // TODO V1: add the move count to the status message
+        // XXX: V2 changed the status so that it shows the phase, the current player and the number of steps
         return "Phase: " + getPhase().name() +
-                ", Player = " + getCurrentPlayer().getName() + ", Moves = " + getCurrentPlayer().getMoveCount() + ", Checkpoint count = " + getCurrentPlayer().getCheckpointCount();
+                ", Player = " + getCurrentPlayer().getName() + ", Moves = " + getCurrentPlayer().getMoveCount();
     }
 
 
